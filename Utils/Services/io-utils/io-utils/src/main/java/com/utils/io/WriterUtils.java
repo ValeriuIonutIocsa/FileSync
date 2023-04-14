@@ -50,13 +50,28 @@ public final class WriterUtils {
 		return success;
 	}
 
+	public static void tryStringToFile(
+			final String string,
+			final Charset charset,
+			final String filePathString) {
+
+		try {
+			tryStringToFile(string, charset, filePathString);
+
+		} catch (final Exception exc) {
+			Logger.printError("failed to write string to file:" +
+					System.lineSeparator() + filePathString);
+			Logger.printException(exc);
+		}
+	}
+
 	public static void stringToFile(
 			final String string,
 			final Charset charset,
 			final String filePathString) throws Exception {
 
-		FactoryFolderCreator.getInstance().createParentDirectories(filePathString, true);
-		FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(filePathString, true);
+		FactoryFolderCreator.getInstance().createParentDirectories(filePathString, false, true);
+		FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(filePathString, false, true);
 		try (PrintStream printStream = StreamUtils.openPrintStream(filePathString, false, charset)) {
 			printStream.print(string);
 		}

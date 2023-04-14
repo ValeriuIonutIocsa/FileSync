@@ -64,10 +64,10 @@ public class ZipFileExtractor {
 
 		} else {
 			if (deleteExisting) {
-				FactoryFolderDeleter.getInstance().cleanFolder(dstFolderPathString, true);
+				FactoryFolderDeleter.getInstance().cleanFolder(dstFolderPathString, false, true);
 			}
 
-			FactoryFolderCreator.getInstance().createDirectories(dstFolderPathString, true);
+			FactoryFolderCreator.getInstance().createDirectories(dstFolderPathString, false, true);
 
 			try (FileSystem zipFileSystem =
 					ZipUtils.openZipFileSystem(zipArchiveFilePathString, useTempFile)) {

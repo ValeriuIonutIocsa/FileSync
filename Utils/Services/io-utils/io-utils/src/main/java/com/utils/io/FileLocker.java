@@ -57,9 +57,9 @@ public class FileLocker {
 				}
 
 			} else {
-				FactoryFolderCreator.getInstance().createParentDirectories(lockFilePathString, true);
-				FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(lockFilePathString, true);
-				FactoryFileCreator.getInstance().createFile(lockFilePathString, true);
+				FactoryFolderCreator.getInstance().createParentDirectories(lockFilePathString, false, true);
+				FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(lockFilePathString, false, true);
+				FactoryFileCreator.getInstance().createFile(lockFilePathString, false, true);
 				lockExistingFile();
 			}
 
@@ -97,7 +97,7 @@ public class FileLocker {
 
 					} else {
 						randomAccessFile.close();
-						FactoryFileDeleter.getInstance().deleteFile(lockFilePathString, true);
+						FactoryFileDeleter.getInstance().deleteFile(lockFilePathString, false, true);
 					}
 				}
 			}

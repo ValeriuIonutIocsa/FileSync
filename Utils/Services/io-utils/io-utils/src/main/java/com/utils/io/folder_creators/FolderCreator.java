@@ -7,30 +7,36 @@ public interface FolderCreator {
 	@ApiMethod
 	boolean createParentDirectories(
 			String filePathString,
-			boolean verbose);
+			boolean verboseProgress,
+			boolean verboseError);
 
-    @ApiMethod
-    boolean createParentDirectoriesNoCheck(
-            String filePathString,
-            boolean verbose);
+	@ApiMethod
+	boolean createParentDirectoriesNoCheck(
+			String filePathString,
+			boolean verboseProgress,
+			boolean verboseError);
 
 	@ApiMethod
 	boolean createDirectories(
 			String directoryPathString,
-			boolean verbose);
+			boolean verboseProgress,
+			boolean verboseError);
 
 	@ApiMethod
 	boolean createDirectoriesNoCheck(
 			String directoryPathString,
-			boolean verbose);
+			boolean verboseProgress,
+			boolean verboseError);
 
 	@ApiMethod
 	boolean createDirectory(
 			String directoryPathString,
-			boolean verbose);
+			boolean verboseProgress,
+			boolean verboseError);
 
 	@ApiMethod
 	boolean createDirectoryNoChecks(
 			String directoryPathString,
-			boolean verbose);
+			boolean verboseProgress,
+			boolean verboseError);
 }

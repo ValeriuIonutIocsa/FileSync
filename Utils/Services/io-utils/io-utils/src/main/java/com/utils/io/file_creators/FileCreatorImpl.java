@@ -16,19 +16,33 @@ class FileCreatorImpl implements FileCreator {
 	@Override
 	public boolean createFile(
 			final String filePathString,
-			final boolean verbose) {
+			final boolean verboseProgress,
+			final boolean verboseError) {
 
-		final boolean success = false;
+		boolean success = false;
 		try {
+			if (verboseProgress) {
+
+				Logger.printProgress("creating file:");
+				Logger.printLine(filePathString);
+			}
+
 			final Path filePath = Paths.get(filePathString);
 			Files.createFile(filePath);
 
+			success = true;
+
 		} catch (final Exception exc) {
-			if (verbose) {
-				Logger.printError("failed to create file:" + System.lineSeparator() + filePathString);
-			}
 			Logger.printException(exc);
 		}
+
+		if (!success) {
+			if (verboseError) {
+				Logger.printError("failed to create file:" +
+						System.lineSeparator() + filePathString);
+			}
+		}
+
 		return success;
 	}
 }

@@ -51,6 +51,39 @@ public final class ReaderUtils {
 	}
 
 	@ApiMethod
+	public static String tryFileToString(
+			final String filePathString) {
+
+		String str = null;
+		try {
+			str = fileToString(filePathString);
+
+		} catch (final Exception exc) {
+			Logger.printError("failed to read contents of file:" +
+					System.lineSeparator() + filePathString);
+			Logger.printException(exc);
+		}
+		return str;
+	}
+
+	@ApiMethod
+	public static String tryFileToString(
+			final String filePathString,
+			final Charset charset) {
+
+		String str = null;
+		try {
+			str = fileToString(filePathString, charset);
+
+		} catch (final Exception exc) {
+			Logger.printError("failed to read contents of file:" +
+					System.lineSeparator() + filePathString);
+			Logger.printException(exc);
+		}
+		return str;
+	}
+
+	@ApiMethod
 	public static String fileToString(
 			final String filePathString) throws Exception {
 

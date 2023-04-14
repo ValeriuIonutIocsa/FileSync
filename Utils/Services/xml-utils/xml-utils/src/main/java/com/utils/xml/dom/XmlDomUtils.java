@@ -105,8 +105,8 @@ public final class XmlDomUtils {
 			final int indentAmount,
 			final String outputPathString) throws Exception {
 
-		FactoryFolderCreator.getInstance().createParentDirectories(outputPathString, true);
-		FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(outputPathString, true);
+		FactoryFolderCreator.getInstance().createParentDirectories(outputPathString, false, true);
+		FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(outputPathString, false, true);
 
 		final StreamResult streamResult = new StreamResult(outputPathString);
 		saveXml(document, omitXmlDeclaration, indentAmount, streamResult);

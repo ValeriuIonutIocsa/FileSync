@@ -9,7 +9,8 @@ public interface FileCopier {
 			String srcFilePathString,
 			String dstFilePathString,
 			boolean copyAttributes,
-			boolean verbose);
+			boolean verboseProgress,
+			boolean verboseError);
 
 	@ApiMethod
 	boolean copyFileNoChecks(
@@ -17,5 +18,6 @@ public interface FileCopier {
 			String dstFilePathString,
 			boolean dstFileExists,
 			boolean copyAttributes,
-			boolean verbose);
+			boolean verboseProgress,
+			boolean verboseError);
 }

@@ -23,22 +23,26 @@ class FileMoverImpl implements FileMover {
 			final String srcFilePathString,
 			final String dstFilePathString,
 			final boolean copyAttributes,
-			final boolean verbose) {
+			final boolean verboseProgress,
+			final boolean verboseError) {
 
 		boolean success = false;
 		try {
-			Logger.printProgress("moving file:");
-			Logger.printLine(srcFilePathString);
-			Logger.printLine("to:");
-			Logger.printLine(dstFilePathString);
+			if (verboseProgress) {
+
+				Logger.printProgress("moving file:");
+				Logger.printLine(srcFilePathString);
+				Logger.printLine("to:");
+				Logger.printLine(dstFilePathString);
+			}
 
 			final boolean keepGoing;
 			if (IoUtils.fileExists(dstFilePathString)) {
 				keepGoing = FactoryReadOnlyFlagClearer.getInstance()
-						.clearReadOnlyFlagFileNoChecks(dstFilePathString, true);
+						.clearReadOnlyFlagFileNoChecks(dstFilePathString, false, verboseError);
 			} else {
 				keepGoing = FactoryFolderCreator.getInstance()
-						.createParentDirectories(dstFilePathString, true);
+						.createParentDirectories(dstFilePathString, false, verboseError);
 			}
 			if (keepGoing) {
 
@@ -52,6 +56,7 @@ class FileMoverImpl implements FileMover {
 				final Path srcFilePath = Paths.get(srcFilePathString);
 				final Path dstFilePath = Paths.get(dstFilePathString);
 				Files.move(srcFilePath, dstFilePath, copyOptionArray);
+
 				success = true;
 			}
 
@@ -59,11 +64,13 @@ class FileMoverImpl implements FileMover {
 			Logger.printException(exc);
 		}
 
-		if (verbose && !success) {
-			Logger.printError("failed to move file " +
-					System.lineSeparator() + srcFilePathString +
-					System.lineSeparator() + "to:" +
-					System.lineSeparator() + dstFilePathString);
+		if (!success) {
+			if (verboseError) {
+				Logger.printError("failed to move file " +
+						System.lineSeparator() + srcFilePathString +
+						System.lineSeparator() + "to:" +
+						System.lineSeparator() + dstFilePathString);
+			}
 		}
 
 		return success;

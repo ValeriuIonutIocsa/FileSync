@@ -17,11 +17,12 @@ class FileDeleterImpl implements FileDeleter {
 	@Override
 	public boolean deleteFile(
 			final String filePathString,
-			final boolean verbose) {
+			final boolean verboseProgress,
+			final boolean verboseError) {
 
 		final boolean success;
 		if (IoUtils.fileExists(filePathString)) {
-			success = deleteFileNoChecks(filePathString, verbose);
+			success = deleteFileNoChecks(filePathString, verboseProgress, verboseError);
 		} else {
 			success = true;
 		}
@@ -31,23 +32,38 @@ class FileDeleterImpl implements FileDeleter {
 	@Override
 	public boolean deleteFileNoChecks(
 			final String filePathString,
-			final boolean verbose) {
+			final boolean verboseProgress,
+			final boolean verboseError) {
 
 		boolean success = false;
 		try {
-			FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(filePathString, true);
+			if (verboseProgress) {
 
-			final Path filePath = Paths.get(filePathString);
-			Files.delete(filePath);
+				Logger.printProgress("deleting file:");
+				Logger.printLine(filePathString);
+			}
 
-			success = true;
+			final boolean keepGoing = FactoryReadOnlyFlagClearer.getInstance()
+					.clearReadOnlyFlagFile(filePathString, false, verboseError);
+			if (keepGoing) {
+
+				final Path filePath = Paths.get(filePathString);
+				Files.delete(filePath);
+
+				success = true;
+			}
 
 		} catch (final Exception exc) {
-			if (verbose) {
-				Logger.printError("failed to delete file:" + System.lineSeparator() + filePathString);
-			}
 			Logger.printException(exc);
 		}
+
+		if (!success) {
+			if (verboseError) {
+				Logger.printError("failed to delete file:" +
+						System.lineSeparator() + filePathString);
+			}
+		}
+
 		return success;
 	}
 

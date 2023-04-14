@@ -20,14 +20,15 @@ class FolderCreatorImpl implements FolderCreator {
 	@Override
 	public boolean createParentDirectories(
 			final String filePathString,
-			final boolean verbose) {
+			final boolean verboseProgress,
+			final boolean verboseError) {
 
 		final boolean success;
 		if (filePathString != null) {
 
 			final String parentFolderPathString = PathUtils.computeParentPath(filePathString);
 			if (parentFolderPathString != null) {
-				success = createDirectories(parentFolderPathString, verbose);
+				success = createDirectories(parentFolderPathString, verboseProgress, verboseError);
 			} else {
 				success = true;
 			}
@@ -42,14 +43,15 @@ class FolderCreatorImpl implements FolderCreator {
 	@Override
 	public boolean createParentDirectoriesNoCheck(
 			final String filePathString,
-			final boolean verbose) {
+			final boolean verboseProgress,
+			final boolean verboseError) {
 
 		final boolean success;
 		if (filePathString != null) {
 
 			final String parentFolderPathString = PathUtils.computeParentPath(filePathString);
 			if (parentFolderPathString != null) {
-				success = createDirectoriesNoCheck(parentFolderPathString, verbose);
+				success = createDirectoriesNoCheck(parentFolderPathString, verboseProgress, verboseError);
 			} else {
 				success = true;
 			}
@@ -64,7 +66,8 @@ class FolderCreatorImpl implements FolderCreator {
 	@Override
 	public boolean createDirectories(
 			final String directoryPathString,
-			final boolean verbose) {
+			final boolean verboseProgress,
+			final boolean verboseError) {
 
 		boolean success = false;
 		if (directoryPathString == null || IoUtils.directoryExists(directoryPathString)) {
@@ -74,13 +77,15 @@ class FolderCreatorImpl implements FolderCreator {
 			if (IoUtils.fileExists(directoryPathString)) {
 
 				final boolean deleteFileSuccess =
-						FactoryFileDeleter.getInstance().deleteFile(directoryPathString, verbose);
+						FactoryFileDeleter.getInstance()
+								.deleteFile(directoryPathString, verboseProgress, verboseError);
 				if (deleteFileSuccess) {
-					success = createDirectoriesNoCheck(directoryPathString, verbose);
+
+					success = createDirectoriesNoCheck(directoryPathString, verboseProgress, verboseError);
 				}
 
 			} else {
-				success = createDirectoriesNoCheck(directoryPathString, verbose);
+				success = createDirectoriesNoCheck(directoryPathString, verboseProgress, verboseError);
 			}
 
 		}
@@ -91,21 +96,33 @@ class FolderCreatorImpl implements FolderCreator {
 	@Override
 	public boolean createDirectoriesNoCheck(
 			final String directoryPathString,
-			final boolean verbose) {
+			final boolean verboseProgress,
+			final boolean verboseError) {
 
 		boolean success = false;
 		try {
+			if (verboseProgress) {
+
+				Logger.printProgress("creating directories:");
+				Logger.printLine(directoryPathString);
+			}
+
 			final Path directoryPath = Paths.get(directoryPathString);
 			Files.createDirectories(directoryPath);
+
 			success = true;
 
 		} catch (final Exception exc) {
-			if (verbose) {
-				Logger.printError("failed to create directory:" +
-						System.lineSeparator() + directoryPathString);
-			}
 			Logger.printException(exc);
 		}
+
+		if (!success) {
+			if (verboseError) {
+				Logger.printError("failed to create directories:" +
+						System.lineSeparator() + directoryPathString);
+			}
+		}
+
 		return success;
 	}
 
@@ -113,7 +130,8 @@ class FolderCreatorImpl implements FolderCreator {
 	@Override
 	public boolean createDirectory(
 			final String directoryPathString,
-			final boolean verbose) {
+			final boolean verboseProgress,
+			final boolean verboseError) {
 
 		boolean success = false;
 		if (directoryPathString == null || IoUtils.directoryExists(directoryPathString)) {
@@ -122,14 +140,15 @@ class FolderCreatorImpl implements FolderCreator {
 		} else {
 			if (IoUtils.fileExists(directoryPathString)) {
 
-				final boolean deleteFileSuccess =
-						FactoryFileDeleter.getInstance().deleteFile(directoryPathString, verbose);
+				final boolean deleteFileSuccess = FactoryFileDeleter.getInstance()
+						.deleteFile(directoryPathString, verboseProgress, verboseError);
 				if (deleteFileSuccess) {
-					success = createDirectoryNoChecks(directoryPathString, verbose);
+
+					success = createDirectoryNoChecks(directoryPathString, verboseProgress, verboseError);
 				}
 
 			} else {
-				success = createDirectoryNoChecks(directoryPathString, verbose);
+				success = createDirectoryNoChecks(directoryPathString, verboseProgress, verboseError);
 			}
 
 		}
@@ -140,21 +159,33 @@ class FolderCreatorImpl implements FolderCreator {
 	@Override
 	public boolean createDirectoryNoChecks(
 			final String directoryPathString,
-			final boolean verbose) {
+			final boolean verboseProgress,
+			final boolean verboseError) {
 
 		boolean success = false;
 		try {
+			if (verboseProgress) {
+
+				Logger.printProgress("creating directory:");
+				Logger.printLine(directoryPathString);
+			}
+
 			final Path directoryPath = Paths.get(directoryPathString);
 			Files.createDirectory(directoryPath);
+
 			success = true;
 
 		} catch (final Exception exc) {
-			if (verbose) {
+			Logger.printException(exc);
+		}
+
+		if (!success) {
+			if (verboseError) {
 				Logger.printError("failed to create directory:" +
 						System.lineSeparator() + directoryPathString);
 			}
-			Logger.printException(exc);
 		}
+
 		return success;
 	}
 

@@ -1,11 +1,24 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-    <component migrationVersion="1" name="GradleMigrationSettings"/>
-    <component name="GradleSettings">
-        <option name="linkedExternalProjectsSettings">
-            <GradleProjectSettings>
-                <option name="externalProjectPath" value="$PROJECT_DIR$"/>
-            </GradleProjectSettings>
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="delegatedBuild" value="false" />
+        <option name="testRunner" value="PLATFORM" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/../../FileSync/FileSync" />
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/../../../../Utils/Services/concurrency-utils/concurrency-utils" />
+            <option value="$PROJECT_DIR$/../../../../Utils/Services/io-utils/io-utils" />
+            <option value="$PROJECT_DIR$/../../../../Utils/Services/logger/logger" />
+            <option value="$PROJECT_DIR$/../../../../Utils/Services/test-utils/test-utils" />
+            <option value="$PROJECT_DIR$/../../../../Utils/Services/xml-utils/xml-utils" />
+          </set>
         </option>
-    </component>
+      </GradleProjectSettings>
+    </option>
+  </component>
 </project>

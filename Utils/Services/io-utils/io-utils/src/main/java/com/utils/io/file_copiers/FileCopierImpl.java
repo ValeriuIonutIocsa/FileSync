@@ -26,11 +26,12 @@ class FileCopierImpl implements FileCopier {
 			final String srcFilePathString,
 			final String dstFilePathString,
 			final boolean copyAttributes,
-			final boolean verbose) {
+			final boolean verboseProgress,
+			final boolean verboseError) {
 
 		final boolean dstFileExists = IoUtils.fileExists(dstFilePathString);
 		return copyFileNoChecks(srcFilePathString, dstFilePathString,
-				dstFileExists, copyAttributes, verbose);
+				dstFileExists, copyAttributes, verboseProgress, verboseError);
 	}
 
 	@ApiMethod
@@ -40,22 +41,26 @@ class FileCopierImpl implements FileCopier {
 			final String dstFilePathString,
 			final boolean dstFileExists,
 			final boolean copyAttributes,
-			final boolean verbose) {
+			final boolean verboseProgress,
+			final boolean verboseError) {
 
 		boolean success = false;
 		try {
-			Logger.printProgress("copying file:");
-			Logger.printLine(srcFilePathString);
-			Logger.printLine("to:");
-			Logger.printLine(dstFilePathString);
+			if (verboseProgress) {
+
+				Logger.printProgress("copying file:");
+				Logger.printLine(srcFilePathString);
+				Logger.printLine("to:");
+				Logger.printLine(dstFilePathString);
+			}
 
 			final boolean keepGoing;
 			if (dstFileExists) {
 				keepGoing = FactoryReadOnlyFlagClearer.getInstance()
-						.clearReadOnlyFlagFileNoChecks(dstFilePathString, true);
+						.clearReadOnlyFlagFileNoChecks(dstFilePathString, false, verboseError);
 			} else {
 				keepGoing = FactoryFolderCreator.getInstance()
-						.createParentDirectories(dstFilePathString, true);
+						.createParentDirectories(dstFilePathString, false, verboseError);
 			}
 			if (keepGoing) {
 
@@ -69,6 +74,7 @@ class FileCopierImpl implements FileCopier {
 				final Path srcFilePath = Paths.get(srcFilePathString);
 				final Path dstFilePath = Paths.get(dstFilePathString);
 				Files.copy(srcFilePath, dstFilePath, copyOptionArray);
+
 				success = true;
 			}
 
@@ -76,11 +82,13 @@ class FileCopierImpl implements FileCopier {
 			Logger.printException(exc);
 		}
 
-		if (verbose && !success) {
-			Logger.printError("failed to copy file " +
-					System.lineSeparator() + srcFilePathString +
-					System.lineSeparator() + "to:" +
-					System.lineSeparator() + dstFilePathString);
+		if (!success) {
+			if (verboseError) {
+				Logger.printError("failed to copy file " +
+						System.lineSeparator() + srcFilePathString +
+						System.lineSeparator() + "to:" +
+						System.lineSeparator() + dstFilePathString);
+			}
 		}
 
 		return success;

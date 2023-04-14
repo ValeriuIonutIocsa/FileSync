@@ -7,10 +7,12 @@ public interface FileDeleter {
 	@ApiMethod
 	boolean deleteFile(
 			String filePathString,
-			boolean verbose);
+			boolean verboseProgress,
+			boolean verboseError);
 
 	@ApiMethod
 	boolean deleteFileNoChecks(
 			String filePathString,
-			boolean verbose);
+			boolean verboseProgress,
+			boolean verboseError);
 }

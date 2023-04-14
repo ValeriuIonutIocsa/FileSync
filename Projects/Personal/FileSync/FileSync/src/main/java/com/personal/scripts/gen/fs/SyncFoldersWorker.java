@@ -137,7 +137,7 @@ class SyncFoldersWorker {
 		if (!sameFile) {
 
 			FactoryFileCopier.getInstance().copyFileNoChecks(
-					srcFolderFilePathString, dstFolderFilePathString, true, true, true);
+					srcFolderFilePathString, dstFolderFilePathString, true, true, true, true);
 		}
 	}
 
@@ -146,7 +146,7 @@ class SyncFoldersWorker {
 			String dstFolderPathString) {
 
 		final boolean success = FactoryFolderCreator.getInstance()
-				.createDirectories(dstFolderPathString, true);
+				.createDirectories(dstFolderPathString, true, true);
 		if (success) {
 
 			final List<String> srcFolderFilePathStringList =
@@ -174,21 +174,21 @@ class SyncFoldersWorker {
 			final String dstFolderFilePathString) {
 
 		FactoryFileCopier.getInstance().copyFileNoChecks(
-				srcFolderFilePathString, dstFolderFilePathString, false, true, true);
+				srcFolderFilePathString, dstFolderFilePathString, false, true, true, true);
 	}
 
 	private static void deleteFolder(
 			final String dstFolderFilePathString) {
 
 		FactoryFolderDeleter.getInstance()
-				.deleteFolder(dstFolderFilePathString, true);
+				.deleteFolder(dstFolderFilePathString, true, true);
 	}
 
 	private static void deleteFile(
 			final String dstFolderFilePathString) {
 
 		FactoryFileDeleter.getInstance()
-				.deleteFile(dstFolderFilePathString, true);
+				.deleteFile(dstFolderFilePathString, true, true);
 	}
 
 	private void addTask(

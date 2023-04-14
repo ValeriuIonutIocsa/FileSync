@@ -392,7 +392,7 @@ test.onlyIf { ! Boolean.getBoolean('skip.tests') }
 
 test {
     useJUnitPlatform()
-    maxHeapSize = '8g'
+    maxHeapSize = '12g'
     outputs.upToDateWhen { false }
     testLogging {
         events "passed", "skipped", "failed", "standardOut", "standardError"

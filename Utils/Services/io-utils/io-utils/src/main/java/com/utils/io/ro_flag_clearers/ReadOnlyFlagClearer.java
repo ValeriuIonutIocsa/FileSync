@@ -9,50 +9,58 @@ public interface ReadOnlyFlagClearer {
 	 *
 	 * @param filePathString
 	 *            The path to the file.
-	 * @param verbose
+	 * @param verboseProgress
+	 * @param verboseError
 	 *            If true, messages will be logged.
 	 */
 	@ApiMethod
 	boolean clearReadOnlyFlagFile(
 			String filePathString,
-			boolean verbose);
+			boolean verboseProgress,
+			boolean verboseError);
 
 	/**
 	 * Clears the readonly flag of a file.
 	 *
 	 * @param filePathString
 	 *            The path to the file.
-	 * @param verbose
+	 * @param verboseProgress
+	 * @param verboseError
 	 *            If true, messages will be logged.
 	 */
 	@ApiMethod
 	boolean clearReadOnlyFlagFileNoChecks(
 			String filePathString,
-			boolean verbose);
+			boolean verboseProgress,
+			boolean verboseError);
 
 	/**
 	 * If folder exists, clears the readonly flags of all files in that folder.
 	 *
 	 * @param folderPathString
 	 *            The path to the folder.
-	 * @param verbose
+	 * @param verboseProgress
+	 * @param verboseError
 	 *            If true, messages will be logged.
 	 */
 	@ApiMethod
 	boolean clearReadOnlyFlagFolder(
 			String folderPathString,
-			boolean verbose);
+			boolean verboseProgress,
+			boolean verboseError);
 
 	/**
 	 * Clears the readonly flags of all files inside a folder.
 	 *
 	 * @param folderPathString
 	 *            The path to the folder.
-	 * @param verbose
+	 * @param verboseProgress
+	 * @param verboseError
 	 *            If true, messages will be logged.
 	 */
 	@ApiMethod
 	boolean clearReadOnlyFlagFolderNoChecks(
 			String folderPathString,
-			boolean verbose);
+			boolean verboseProgress,
+			boolean verboseError);
 }

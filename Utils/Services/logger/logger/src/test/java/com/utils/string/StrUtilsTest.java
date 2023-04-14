@@ -7,8 +7,11 @@ import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
+import org.junit.platform.commons.util.StringUtils;
 
+import com.utils.log.Logger;
 import com.utils.string.characters.SpecialCharacterUtils;
 
 class StrUtilsTest {
@@ -179,5 +182,15 @@ class StrUtilsTest {
 
 		final String nanoTimeString = StrUtils.nanoTimeToString(nanoTime);
 		Assertions.assertEquals(expectedString, nanoTimeString);
+	}
+
+	@Test
+	void testCreateDateTimeString() {
+
+		final String dateTimeString = StrUtils.createDateTimeString();
+		Assertions.assertFalse(StringUtils.isBlank(dateTimeString));
+
+		Logger.printNewLine();
+		Logger.printLine(dateTimeString);
 	}
 }

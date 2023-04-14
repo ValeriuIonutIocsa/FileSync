@@ -7,5 +7,6 @@ public interface FileCreator {
 	@ApiMethod
 	boolean createFile(
 			String filePathString,
-			boolean verbose);
+			boolean verboseProgress,
+			boolean verboseError);
 }

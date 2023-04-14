@@ -43,7 +43,7 @@ public final class RmiSslUtils {
 				"JavaCertificates", certificateResourceFilePath);
 		if (!IoUtils.fileExists(certificatePathString)) {
 
-			FactoryFolderCreator.getInstance().createParentDirectories(certificatePathString, true);
+			FactoryFolderCreator.getInstance().createParentDirectories(certificatePathString, false, true);
 
 			try (InputStream inputStream =
 					ResourceFileUtils.resourceFileToInputStream(certificateResourceFilePath);
@@ -91,7 +91,7 @@ public final class RmiSslUtils {
 				"JavaCertificates", certificateResourceFilePath);
 		if (!IoUtils.fileExists(certificatePathString)) {
 
-			FactoryFolderCreator.getInstance().createParentDirectories(certificatePathString, true);
+			FactoryFolderCreator.getInstance().createParentDirectories(certificatePathString, false, true);
 
 			WriterUtils.byteArrayToFile(certificateByteArray, certificatePathString);
 
