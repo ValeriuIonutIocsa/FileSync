@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DocumentElement>
+    <FirstElement FirstAttribute="1" SecondAttribute="2"/>
+    <SecondElement Attribute1="1" Attribute2="2" Attribute3="3">
+        <ThirdElement FirstAttribute="1" SecondAttribute="2"/>
+        <ThirdElement FirstAttribute="1" SecondAttribute="2"/>
+    </SecondElement>
+    <FirstElement FirstAttribute="1" SecondAttribute="2"/>
+</DocumentElement>

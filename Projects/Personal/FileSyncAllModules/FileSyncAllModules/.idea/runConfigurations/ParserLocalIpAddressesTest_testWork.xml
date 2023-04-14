@@ -1,0 +1,18 @@
+<component name="ProjectRunConfigurationManager">
+    <configuration default="false" factoryName="JUnit" folderName="io-utils" name="ParserLocalIpAddressesTest.testWork" nameIsGenerated="true" type="JUnit">
+        <module name="FileSyncAllModules.io-utils.test"/>
+        <extension name="coverage">
+            <pattern>
+                <option name="PATTERN" value="com.utils.net.ip_addr.*"/>
+                <option name="ENABLED" value="true"/>
+            </pattern>
+        </extension>
+        <option name="PACKAGE_NAME" value="com.utils.net.ip_addr"/>
+        <option name="MAIN_CLASS_NAME" value="com.utils.net.ip_addr.ParserLocalIpAddressesTest"/>
+        <option name="METHOD_NAME" value="testWork"/>
+        <option name="TEST_OBJECT" value="method"/>
+        <method v="2">
+            <option enabled="true" name="Make"/>
+        </method>
+    </configuration>
+</component>

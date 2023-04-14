@@ -1,0 +1,18 @@
+<component name="ProjectRunConfigurationManager">
+    <configuration default="false" factoryName="JUnit" folderName="xml-utils" name="XmlDomUtilsTest.testSaveXmlFile" nameIsGenerated="true" type="JUnit">
+        <module name="FileSyncAllModules.xml-utils.test"/>
+        <extension name="coverage">
+            <pattern>
+                <option name="PATTERN" value="com.utils.xml.dom.*"/>
+                <option name="ENABLED" value="true"/>
+            </pattern>
+        </extension>
+        <option name="PACKAGE_NAME" value="com.utils.xml.dom"/>
+        <option name="MAIN_CLASS_NAME" value="com.utils.xml.dom.XmlDomUtilsTest"/>
+        <option name="METHOD_NAME" value="testSaveXmlFile"/>
+        <option name="TEST_OBJECT" value="method"/>
+        <method v="2">
+            <option enabled="true" name="Make"/>
+        </method>
+    </configuration>
+</component>

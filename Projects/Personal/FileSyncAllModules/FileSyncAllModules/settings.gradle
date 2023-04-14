@@ -1,0 +1,9 @@
+final String projectPath = file('.').getAbsolutePath()
+final String rootDirPath = file('../../../../').getAbsolutePath()
+gradle.ext.rootDirPath = rootDirPath
+final String[] subProjectsRelativePaths = [
+            '/Projects/Personal/FileSync/FileSync'
+    ]
+
+apply from: rootDirPath + '/common_settings.gradle'
+configureSettings(projectPath, rootDirPath, subProjectsRelativePaths)

@@ -1,0 +1,14 @@
+ext {
+    subProjectNames = [
+            ':test-utils'
+    ]
+    compileClassPaths = [
+            'org.apache.commons:commons-lang3:3.12.0',
+            'org.jetbrains:annotations:24.0.1'
+    ]
+    compileJarFilePaths = []
+    testCompileClassPaths = []
+    testCompileJarFilePaths = []
+}
+
+apply from: gradle.ext.rootDirPath + '/common_build.gradle'
