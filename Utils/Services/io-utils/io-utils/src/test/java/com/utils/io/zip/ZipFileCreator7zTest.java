@@ -10,7 +10,7 @@ class ZipFileCreator7zTest {
 
 		final String srcFilePathString;
 		final String zipArchiveFilePathString;
-		int input = Integer.parseInt("11");
+		final int input = Integer.parseInt("11");
 		if (input == 1) {
 			srcFilePathString = "D:\\IVI_MISC\\Misc\\mnf\\test\\ChosenPictures";
 			zipArchiveFilePathString = "D:\\IVI_MISC\\Misc\\mnf\\test\\ChosenPictures.zip";

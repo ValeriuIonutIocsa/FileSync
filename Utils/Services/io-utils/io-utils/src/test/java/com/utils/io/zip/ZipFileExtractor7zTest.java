@@ -10,7 +10,7 @@ class ZipFileExtractor7zTest {
 
 		final String zipArchiveFilePathString;
 		final String dstFolderPathString;
-		int input = Integer.parseInt("11");
+		final int input = Integer.parseInt("11");
 		if (input == 1) {
 			zipArchiveFilePathString = "D:\\IVI_MISC\\Misc\\mnf\\test\\ChosenPictures.zip";
 			dstFolderPathString = "D:\\IVI_MISC\\Misc\\mnf\\test";

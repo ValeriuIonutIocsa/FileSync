@@ -142,8 +142,8 @@ class SyncFoldersWorker {
 	}
 
 	private void createFolder(
-			String srcFolderPathString,
-			String dstFolderPathString) {
+			final String srcFolderPathString,
+			final String dstFolderPathString) {
 
 		final boolean success = FactoryFolderCreator.getInstance()
 				.createDirectories(dstFolderPathString, true, true);

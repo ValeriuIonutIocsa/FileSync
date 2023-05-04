@@ -39,7 +39,7 @@ public class ZipFileExtractor7z {
 						System.lineSeparator() + zipArchiveFilePathString);
 
 			} else {
-				boolean keepGoing;
+				final boolean keepGoing;
 				if (deleteExisting) {
 
 					String zipArchiveNameWoExt = null;

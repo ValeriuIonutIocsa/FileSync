@@ -23,7 +23,7 @@ public class ZipFileCreator7z {
 	public ZipFileCreator7z(
 			final String srcFilePathString,
 			final String zipArchiveFilePathString,
-			boolean deleteExisting) {
+			final boolean deleteExisting) {
 
 		this.srcFilePathString = srcFilePathString;
 		this.zipArchiveFilePathString = zipArchiveFilePathString;
