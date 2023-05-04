@@ -2,11 +2,11 @@ package com.utils.io.processes;
 
 import com.utils.string.StrUtils;
 
-public abstract class ReadBytesHandlerLines implements ReadBytesHandler {
+public abstract class AbstractReadBytesHandlerLines implements ReadBytesHandler {
 
 	private final StringBuilder stringBuilder;
 
-	protected ReadBytesHandlerLines() {
+	protected AbstractReadBytesHandlerLines() {
 
 		stringBuilder = new StringBuilder();
 	}

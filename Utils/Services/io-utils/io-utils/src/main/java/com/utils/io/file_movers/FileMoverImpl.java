@@ -22,7 +22,6 @@ class FileMoverImpl implements FileMover {
 	public boolean moveFile(
 			final String srcFilePathString,
 			final String dstFilePathString,
-			final boolean copyAttributes,
 			final boolean verboseProgress,
 			final boolean verboseError) {
 
@@ -48,9 +47,6 @@ class FileMoverImpl implements FileMover {
 
 				final List<CopyOption> copyOptionList = new ArrayList<>();
 				copyOptionList.add(StandardCopyOption.REPLACE_EXISTING);
-				if (copyAttributes) {
-					copyOptionList.add(StandardCopyOption.COPY_ATTRIBUTES);
-				}
 				final CopyOption[] copyOptionArray = copyOptionList.toArray(new CopyOption[] {});
 
 				final Path srcFilePath = Paths.get(srcFilePathString);

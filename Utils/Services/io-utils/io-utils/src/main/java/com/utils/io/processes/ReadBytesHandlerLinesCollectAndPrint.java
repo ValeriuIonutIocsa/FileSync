@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.utils.log.Logger;
 
-public class ReadBytesHandlerLinesCollectAndPrint extends ReadBytesHandlerLines {
+public class ReadBytesHandlerLinesCollectAndPrint extends AbstractReadBytesHandlerLines {
 
 	private final List<String> lineList;
 

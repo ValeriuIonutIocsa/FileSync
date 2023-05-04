@@ -3,7 +3,7 @@ package com.utils.io.processes;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReadBytesHandlerLinesCollect extends ReadBytesHandlerLines {
+public class ReadBytesHandlerLinesCollect extends AbstractReadBytesHandlerLines {
 
 	private final List<String> lineList;
 

@@ -20,9 +20,21 @@ public final class PathUtils {
 
 		final String rootPath;
 		if (SystemUtils.IS_OS_WINDOWS) {
-			rootPath = "D:\\";
+
+			final String dDrivePathString = "D:\\";
+			if (IoUtils.directoryExists(dDrivePathString)) {
+				rootPath = dDrivePathString;
+			} else {
+				rootPath = "C:\\";
+			}
+
 		} else {
-			rootPath = "/mnt/d";
+			final String dDrivePathString = "/mnt/d";
+			if (IoUtils.directoryExists(dDrivePathString)) {
+				rootPath = dDrivePathString;
+			} else {
+				rootPath = "/mnt";
+			}
 		}
 		return rootPath;
 	}

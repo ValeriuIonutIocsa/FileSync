@@ -8,6 +8,7 @@ public class CustomPatternGlobRegex extends CustomPatternUnixRegex {
 			final String pattern,
 			final boolean negate,
 			final boolean caseSensitive) {
+
 		super(pattern, negate, caseSensitive);
 	}
 

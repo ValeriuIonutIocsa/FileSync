@@ -36,7 +36,7 @@ class HashUtilsTest {
 
 		} else if (input == 2) {
 			filePathString = "C:\\Users\\uid39522\\OneDrive - Vitesco Technologies\\" +
-					"_VALERIU_\\ProjectAnalyzer\\3_Executable\\5.0.40\\ProjectAnalyzer.jar";
+					"_VALERIU_\\ProjectAnalyzer\\3_Executable\\5.0.39\\ProjectAnalyzer.jar";
 			algorithm = "SHA-256";
 			expectedHash = "49732733b7208191f1de3b1be1f1588e1da44dd09ff24d279d082e782a773065";
 

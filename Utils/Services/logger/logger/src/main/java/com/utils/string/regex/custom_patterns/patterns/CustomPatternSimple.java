@@ -2,12 +2,13 @@ package com.utils.string.regex.custom_patterns.patterns;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class CustomPatternSimple extends CustomPattern {
+public class CustomPatternSimple extends AbstractCustomPattern {
 
 	public CustomPatternSimple(
 			final String pattern,
 			final boolean negate,
 			final boolean caseSensitive) {
+
 		super(pattern, negate, caseSensitive);
 	}
 

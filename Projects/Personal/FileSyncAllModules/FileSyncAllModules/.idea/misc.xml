@@ -7,20 +7,28 @@
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="PDMPlugin">
-    <option name="customRuleSets">
-      <list>
-        <option value="C:\IVI\Apps\Eclipse\settings\PmdRuleset.xml" />
-      </list>
-    </option>
-    <option name="options">
-      <map>
-        <entry key="Statistics URL" value="" />
-        <entry key="Target JDK" value="11" />
-      </map>
-    </option>
     <option name="skipTestSources" value="false" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
+  <component name="SaveActionSettings">
+    <option name="actions">
+      <set>
+        <option value="activateOnShortcut" />
+        <option value="organizeImports" />
+        <option value="reformat" />
+        <option value="fieldCanBeFinal" />
+        <option value="localCanBeFinal" />
+        <option value="missingOverrideAnnotation" />
+        <option value="useBlocks" />
+        <option value="generateSerialVersionUID" />
+        <option value="unnecessaryThis" />
+        <option value="finalPrivateMethod" />
+        <option value="explicitTypeCanBeDiamond" />
+        <option value="unnecessarySemicolon" />
+      </set>
+    </option>
+    <option name="configurationPath" value="" />
+  </component>
   <component name="SuppressionsComponent">
     <option name="suppComments" value="[]" />
   </component>

@@ -1,6 +1,5 @@
 package com.utils.net;
 
-import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +23,16 @@ public final class HostNameUtils {
 			commandList.add("/c");
 			commandList.add("hostname");
 			final Process process = new ProcessBuilder(commandList).start();
-			final InputStream inputStream = process.getInputStream();
+
 			final ReadBytesHandlerByteArray readBytesHandlerByteArray = new ReadBytesHandlerByteArray();
-			new InputStreamReaderThread("host name finder", inputStream,
-					Charset.defaultCharset(), readBytesHandlerByteArray).start();
+			final InputStreamReaderThread inputStreamReaderThread = new InputStreamReaderThread(
+					"host name finder", process.getInputStream(),
+					Charset.defaultCharset(), readBytesHandlerByteArray);
+			inputStreamReaderThread.start();
+
 			process.waitFor();
+			inputStreamReaderThread.join();
+
 			hostName = readBytesHandlerByteArray.getString(Charset.defaultCharset());
 
 		} catch (final Exception ignored) {

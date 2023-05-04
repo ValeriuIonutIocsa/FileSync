@@ -1,6 +1,5 @@
 package com.utils.env;
 
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
@@ -31,10 +30,12 @@ public class ExporterEnvironmentVariablesWindows implements ExporterEnvironmentV
 					.command("cmd", "/c", "set")
 					.redirectErrorStream(true)
 					.start();
-			final InputStream inputStream = process.getInputStream();
+
 			final InputStreamReaderThread inputStreamReaderThread = new InputStreamReaderThread(
-					"env", inputStream, StandardCharsets.UTF_8, new ReadBytesHandlerOutputStream(outputStream));
+					"env", process.getInputStream(),
+					StandardCharsets.UTF_8, new ReadBytesHandlerOutputStream(outputStream));
 			inputStreamReaderThread.start();
+
 			process.waitFor();
 			inputStreamReaderThread.join();
 
