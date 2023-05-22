@@ -47,9 +47,9 @@ dependencies {
         }
     }
 
-    testFixturesImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.3'
-    testFixturesRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.3'
-    testFixturesRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.9.3'
+    testFixturesImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0-M1'
+    testFixturesRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0-M1'
+    testFixturesRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.0-M1'
 
     for (String testCompileClassPath : testCompileClassPaths) {
 
@@ -64,9 +64,9 @@ dependencies {
         }
     }
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.3'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.3'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.9.3'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0-M1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0-M1'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.0-M1'
 
     for (String testCompileClassPath : testCompileClassPaths) {
 
