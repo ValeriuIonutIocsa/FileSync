@@ -1,7 +1,11 @@
 package com.personal.scripts.gen.fs;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -67,27 +71,26 @@ class SyncFoldersWorker {
 
 		final List<String> srcFolderFolderPathStringList = new ArrayList<>();
 		final List<String> srcFolderFilePathStringList = new ArrayList<>();
-		ListFileUtils.visitFiles(srcFolderPathString,
-				dirPath -> {
-					final String folderPathString = dirPath.toString();
-					srcFolderFolderPathStringList.add(folderPathString);
-				},
-				filePath -> {
-					final String filePathString = filePath.toString();
-					srcFolderFilePathStringList.add(filePathString);
-				});
+		parseFiles(srcFolderPathString, srcFolderFolderPathStringList, srcFolderFilePathStringList);
 
 		final List<String> dstFolderFolderPathStringList = new ArrayList<>();
 		final List<String> dstFolderFilePathStringList = new ArrayList<>();
-		ListFileUtils.visitFiles(dstFolderPathString,
-				dirPath -> {
-					final String folderPathString = dirPath.toString();
-					dstFolderFolderPathStringList.add(folderPathString);
-				},
-				filePath -> {
-					final String filePathString = filePath.toString();
-					dstFolderFilePathStringList.add(filePathString);
-				});
+		parseFiles(dstFolderPathString, dstFolderFolderPathStringList, dstFolderFilePathStringList);
+
+		final Set<String> lowerCaseDstFolderFolderPathStringList = new LinkedHashSet<>();
+		for (final String dstFolderFolderPathString : dstFolderFolderPathStringList) {
+
+			final String lowerCaseDstFolderFolderPathString =
+					dstFolderFolderPathString.toLowerCase(Locale.US);
+			lowerCaseDstFolderFolderPathStringList.add(lowerCaseDstFolderFolderPathString);
+		}
+		final Set<String> lowerCaseDstFolderFilePathStringList = new LinkedHashSet<>();
+		for (final String dstFolderFilePathString : dstFolderFilePathStringList) {
+
+			final String lowerCaseDstFolderFilePathString =
+					dstFolderFilePathString.toLowerCase(Locale.US);
+			lowerCaseDstFolderFilePathStringList.add(lowerCaseDstFolderFilePathString);
+		}
 
 		for (final String srcFolderFolderPathString : srcFolderFolderPathStringList) {
 
@@ -95,15 +98,17 @@ class SyncFoldersWorker {
 					PathUtils.computeRelativePath(srcFolderPathString, srcFolderFolderPathString);
 			final String dstFolderFolderPathString =
 					PathUtils.computePath(dstFolderPathString, relativePathString);
+			final String lowerCaseDstFolderFolderPathString =
+					dstFolderFolderPathString.toLowerCase(Locale.US);
 
-			if (dstFolderFolderPathStringList.contains(dstFolderFolderPathString)) {
+			if (lowerCaseDstFolderFolderPathStringList.contains(lowerCaseDstFolderFolderPathString)) {
 
-				dstFolderFilePathStringList.remove(dstFolderFolderPathString);
+				lowerCaseDstFolderFolderPathStringList.remove(lowerCaseDstFolderFolderPathString);
 				addTask(() -> syncFolders(srcFolderFolderPathString, dstFolderFolderPathString));
 
-			} else if (dstFolderFilePathStringList.contains(dstFolderFolderPathString)) {
+			} else if (lowerCaseDstFolderFilePathStringList.contains(lowerCaseDstFolderFolderPathString)) {
 
-				dstFolderFilePathStringList.remove(dstFolderFolderPathString);
+				lowerCaseDstFolderFilePathStringList.remove(lowerCaseDstFolderFolderPathString);
 				addTask(() -> {
 					deleteFile(dstFolderFolderPathString);
 					createFolder(srcFolderFolderPathString, dstFolderFolderPathString);
@@ -120,18 +125,20 @@ class SyncFoldersWorker {
 					PathUtils.computeRelativePath(srcFolderPathString, srcFolderFilePathString);
 			final String dstFolderFilePathString =
 					PathUtils.computePath(dstFolderPathString, relativePathString);
+			final String lowerCaseDstFolderFilePathString =
+					dstFolderFilePathString.toLowerCase(Locale.US);
 
-			if (dstFolderFolderPathStringList.contains(dstFolderFilePathString)) {
+			if (lowerCaseDstFolderFolderPathStringList.contains(lowerCaseDstFolderFilePathString)) {
 
-				dstFolderFilePathStringList.remove(dstFolderFilePathString);
+				lowerCaseDstFolderFolderPathStringList.remove(lowerCaseDstFolderFilePathString);
 				addTask(() -> {
 					deleteFolder(dstFolderFilePathString);
 					createFile(srcFolderFilePathString, dstFolderFilePathString);
 				});
 
-			} else if (dstFolderFilePathStringList.contains(dstFolderFilePathString)) {
+			} else if (lowerCaseDstFolderFilePathStringList.contains(lowerCaseDstFolderFilePathString)) {
 
-				dstFolderFilePathStringList.remove(dstFolderFilePathString);
+				lowerCaseDstFolderFilePathStringList.remove(lowerCaseDstFolderFilePathString);
 				addTask(() -> syncFiles(srcFolderFilePathString, dstFolderFilePathString));
 
 			} else {
@@ -139,11 +146,11 @@ class SyncFoldersWorker {
 			}
 		}
 
-		for (final String dstFolderFolderPathString : dstFolderFolderPathStringList) {
-			addTask(() -> deleteFolder(dstFolderFolderPathString));
+		for (final String lowerCaseDstFolderFolderPathString : lowerCaseDstFolderFolderPathStringList) {
+			addTask(() -> deleteFolder(lowerCaseDstFolderFolderPathString));
 		}
-		for (final String dstFolderFilePathString : dstFolderFilePathStringList) {
-			addTask(() -> deleteFile(dstFolderFilePathString));
+		for (final String lowerCaseDstFolderFilePathString : lowerCaseDstFolderFilePathStringList) {
+			addTask(() -> deleteFile(lowerCaseDstFolderFilePathString));
 		}
 	}
 
@@ -190,15 +197,7 @@ class SyncFoldersWorker {
 
 			final List<String> srcFolderFolderPathStringList = new ArrayList<>();
 			final List<String> srcFolderFilePathStringList = new ArrayList<>();
-			ListFileUtils.visitFiles(srcFolderPathString,
-					dirPath -> {
-						final String folderPathString = dirPath.toString();
-						srcFolderFolderPathStringList.add(folderPathString);
-					},
-					filePath -> {
-						final String filePathString = filePath.toString();
-						srcFolderFilePathStringList.add(filePathString);
-					});
+			parseFiles(srcFolderPathString, srcFolderFolderPathStringList, srcFolderFilePathStringList);
 
 			for (final String srcFolderFolderPathString : srcFolderFolderPathStringList) {
 
@@ -255,5 +254,21 @@ class SyncFoldersWorker {
 				taskCount--;
 			}
 		});
+	}
+
+	private static void parseFiles(
+			final String rootFolderPathString,
+			final Collection<String> folderPathStringCollection,
+			final Collection<String> filePathStringCollection) {
+
+		ListFileUtils.visitFiles(rootFolderPathString,
+				dirPath -> {
+					final String folderPathString = dirPath.toString();
+					folderPathStringCollection.add(folderPathString);
+				},
+				filePath -> {
+					final String filePathString = filePath.toString();
+					filePathStringCollection.add(filePathString);
+				});
 	}
 }

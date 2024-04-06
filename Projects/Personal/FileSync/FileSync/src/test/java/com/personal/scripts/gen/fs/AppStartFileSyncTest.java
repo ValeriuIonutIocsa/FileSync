@@ -2,6 +2,7 @@ package com.personal.scripts.gen.fs;
 
 import org.junit.jupiter.api.Test;
 
+import com.utils.io.folder_copiers.FactoryFolderCopier;
 import com.utils.test.TestInputUtils;
 
 class AppStartFileSyncTest {
@@ -17,10 +18,17 @@ class AppStartFileSyncTest {
 			args = new String[] { "C:\\IVI\\Apps\\FileSync\\FileSyncSettings_PcToExt_IVI.xml" };
 
 		} else if (input == 11) {
+			final String srcFolderPathString = "D:\\IVI_MISC\\Tmp\\FileSync\\SrcFolder";
+			final String dstFolderPathString = "D:\\IVI_MISC\\Tmp\\FileSync\\DstFolder";
+
+			final String origDstFolderPathString = "D:\\IVI_MISC\\Tmp\\FileSync\\DstFolder_ORIG";
+			FactoryFolderCopier.getInstance().copyFolder(
+					origDstFolderPathString, dstFolderPathString, true, true, true);
+
 			args = new String[] {
 					"CLI",
-					"D:\\IVI_MISC\\Tmp\\FileSync\\SrcFolder",
-					"D:\\IVI_MISC\\Tmp\\FileSync\\DstFolder"
+					srcFolderPathString,
+					dstFolderPathString
 			};
 
 		} else if (input == 101) {
