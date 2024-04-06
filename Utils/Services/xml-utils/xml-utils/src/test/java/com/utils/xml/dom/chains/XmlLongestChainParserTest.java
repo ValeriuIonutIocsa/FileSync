@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -12,26 +13,41 @@ import org.w3c.dom.Element;
 import com.utils.io.PathUtils;
 import com.utils.io.StreamUtils;
 import com.utils.log.Logger;
+import com.utils.string.StrUtils;
 import com.utils.xml.dom.XmlDomUtils;
 
 class XmlLongestChainParserTest {
 
-	@Test
-	void testWork() throws Exception {
+	private static String xmlFilePathString;
+
+	@BeforeAll
+	static void beforeAll() {
+
+		xmlFilePathString = configureXmlFilePathString();
+	}
+
+	private static String configureXmlFilePathString() {
 
 		final String xmlFilePathString;
-		final int input = Integer.parseInt("12");
+		final int input = StrUtils.tryParsePositiveInt("12");
 		if (input == 1) {
-			xmlFilePathString = "D:\\tmp\\ProjectAnalyzer\\Outputs\\BMG12_0U0_I00-symbol_types_local_5.0.24.xml";
+			xmlFilePathString = "D:\\VT_IVI_MISC\\Tmp\\CRO\\ProjectAnalyzer\\Outputs\\" +
+					"BMG12_0U0_I00-symbol_types_local_5.0.24.xml";
 
 		} else if (input == 11) {
-			xmlFilePathString = "D:\\tmp\\ProjectAnalyzer\\Outputs\\FOFB4_0U0_120-symbol_types_local_5.0.24.xml";
+			xmlFilePathString = "D:\\VT_IVI_MISC\\Tmp\\CRO\\ProjectAnalyzer\\Outputs\\" +
+					"FOH02_0U0_306-symbol_types_local_5.0.24.xml";
 		} else if (input == 12) {
-			xmlFilePathString = "D:\\tmp\\ProjectAnalyzer\\TestData\\SymbolTypes\\" +
-					"FOFB4_0U0_120_Os_CounterAddRelJob_symbol_types.xml";
+			xmlFilePathString = "D:\\VT_IVI_MISC\\Tmp\\CRO\\ProjectAnalyzer\\TestData\\SymbolTypes\\" +
+					"FOH02_0U0_306_Os_CounterAddRelJob_symbol_types.xml";
 		} else {
 			throw new RuntimeException();
 		}
+		return xmlFilePathString;
+	}
+
+	@Test
+	void testWork() throws Exception {
 
 		final Document document = XmlDomUtils.openDocument(xmlFilePathString);
 		final Element documentElement = document.getDocumentElement();

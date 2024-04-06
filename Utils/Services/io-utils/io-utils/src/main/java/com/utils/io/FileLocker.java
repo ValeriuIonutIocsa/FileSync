@@ -57,8 +57,10 @@ public class FileLocker {
 				}
 
 			} else {
-				FactoryFolderCreator.getInstance().createParentDirectories(lockFilePathString, false, true);
-				FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(lockFilePathString, false, true);
+				FactoryFolderCreator.getInstance()
+						.createParentDirectories(lockFilePathString, false, true);
+				FactoryReadOnlyFlagClearer.getInstance()
+						.clearReadOnlyFlagFile(lockFilePathString, false, true);
 				FactoryFileCreator.getInstance().createFile(lockFilePathString, false, true);
 				lockExistingFile();
 			}

@@ -1,6 +1,6 @@
 package com.utils.log.progress;
 
-public final class ProgressIndicatorNoOp extends AbstractProgressIndicator {
+public final class ProgressIndicatorNoOp implements ProgressIndicator {
 
 	public static final ProgressIndicatorNoOp INSTANCE = new ProgressIndicatorNoOp();
 

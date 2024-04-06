@@ -10,6 +10,7 @@ public interface FolderDeleter {
 	 * @param folderPathString
 	 *            The path to the folder.
 	 * @param verboseProgress
+	 *            Enables verbose progress logging.
 	 * @param verboseError
 	 *            If true, messages will be logged.
 	 */
@@ -25,6 +26,7 @@ public interface FolderDeleter {
 	 * @param folderPathString
 	 *            The path to the folder.
 	 * @param verboseProgress
+	 *            Enables verbose progress logging.
 	 * @param verboseError
 	 *            If true, messages will be logged.
 	 */
@@ -40,6 +42,7 @@ public interface FolderDeleter {
 	 * @param folderPathString
 	 *            The path to the folder.
 	 * @param verboseProgress
+	 *            Enables verbose progress logging.
 	 * @param verboseError
 	 *            If true, messages will be logged.
 	 */
@@ -51,10 +54,11 @@ public interface FolderDeleter {
 
 	/**
 	 * Deletes everything inside a folder but not the folder itself.
-	 *
+	 * 
 	 * @param folderPathString
 	 *            The path to the folder.
 	 * @param verboseProgress
+	 *            Enables verbose progress logging.
 	 * @param verboseError
 	 *            If true, messages will be logged.
 	 */

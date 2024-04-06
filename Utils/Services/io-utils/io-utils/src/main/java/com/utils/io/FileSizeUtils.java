@@ -3,11 +3,10 @@ package com.utils.io;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.CharacterIterator;
-import java.text.StringCharacterIterator;
 
 import com.utils.annotations.ApiMethod;
 import com.utils.log.Logger;
+import com.utils.string.size.SizeUtils;
 
 public final class FileSizeUtils {
 
@@ -39,7 +38,7 @@ public final class FileSizeUtils {
 		try {
 			final Path filePath = Paths.get(filePathString);
 			final long fileSize = Files.size(filePath);
-			fileSizeString = humanReadableByteCountBin(fileSize);
+			fileSizeString = SizeUtils.humanReadableByteCountBin(fileSize);
 
 		} catch (final Exception exc) {
 			Logger.printError("failed to compute readable size of file:" +
@@ -47,32 +46,5 @@ public final class FileSizeUtils {
 			Logger.printException(exc);
 		}
 		return fileSizeString;
-	}
-
-	public static String humanReadableByteCountBin(
-			final long bytes) {
-
-		final String result;
-		final long absB;
-		if (bytes == Long.MIN_VALUE) {
-			absB = Long.MAX_VALUE;
-		} else {
-			absB = Math.abs(bytes);
-		}
-		if (absB < 1024) {
-			result = bytes + " B";
-
-		} else {
-			long value = absB;
-			final CharacterIterator ci = new StringCharacterIterator("KMGTPE");
-			for (int i = 40; i >= 0 && absB > 0xfffccccccccccccL >> i; i -= 10) {
-
-				value >>= 10;
-				ci.next();
-			}
-			value *= Long.signum(bytes);
-			result = String.format("%.1f %ciB", value / 1024.0, ci.current());
-		}
-		return result;
 	}
 }

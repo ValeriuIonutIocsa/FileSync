@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library>
+    <book id="001">
+        <title>Introduction to XML</title>
+        <author>John Doe</author>
+        <published_year>2022</published_year>
+        <price currency="USD">29.99</price>
+    </book>
+    <book id="002">
+        <title>Data Science Basics</title>
+        <author>Jane Smith</author>
+        <published_year>2021</published_year>
+        <price currency="EUR">39.95</price>
+    </book>
+</library>

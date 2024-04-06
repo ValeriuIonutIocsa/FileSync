@@ -16,8 +16,11 @@ if (project.hasProperty('projectVersion')) {
 
 apply plugin: 'java-library'
 apply plugin: 'java-test-fixtures'
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
 compileJava.options.encoding = 'UTF-8'
 
 repositories {
@@ -47,9 +50,9 @@ dependencies {
         }
     }
 
-    testFixturesImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0-M1'
-    testFixturesRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0-M1'
-    testFixturesRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.0-M1'
+    testFixturesImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
+    testFixturesRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
+    testFixturesRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.2'
 
     for (String testCompileClassPath : testCompileClassPaths) {
 
@@ -64,9 +67,10 @@ dependencies {
         }
     }
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0-M1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0-M1'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.0-M1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.10.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.2'
 
     for (String testCompileClassPath : testCompileClassPaths) {
 
@@ -106,16 +110,15 @@ task fatJar(type: Jar, dependsOn: compileJava) {
     destinationDirectory.set(destDir)
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
-    try {
-        if (project.hasProperty('mainClass')) {
-            manifest {
-                attributes('Main-Class': mainClass,
-                        'Implementation-Title': project.name,
-                        'Implementation-Version': project.version,
-                        'Build-Time': new Date().format('dd MMM yyyy, hh:mm:ss zzz'))
-            }
-        }
-    } catch (Exception ignored) {
+    Map<String, ?> manifestAttributesMap = new HashMap<>()
+    if (project.hasProperty('mainClass')) {
+        manifestAttributesMap.put('Main-Class', mainClass)
+    }
+    manifestAttributesMap.put('Implementation-Title', project.name)
+    manifestAttributesMap.put('Implementation-Version', project.version)
+    manifestAttributesMap.put('Build-Time', new Date().format('dd MMM yyyy, hh:mm:ss zzz'))
+    manifest {
+        attributes (manifestAttributesMap)
     }
 
     archiveClassifier.set('all')
@@ -136,7 +139,7 @@ task fatJar(type: Jar, dependsOn: compileJava) {
         if (otherDestDir != destDir) {
             copyFile(destDir.toString(), otherDestDir.toString(), archiveFileName.get().toString())
         }
-        if (project.hasProperty('covertToExe') && covertToExe) {
+        if (project.hasProperty('convertToExe') && convertToExe) {
             final File wrapperScriptFile = new File((String) "${destDir}/wrapper/Wrapper.java")
             if (wrapperScriptFile.exists()) {
                 exec {
@@ -175,14 +178,15 @@ task sourcesJar(type: Jar) {
     destinationDirectory.set(destDir)
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
-    try {
-        manifest {
-            attributes(
-                    'Implementation-Title': project.name,
-                    'Implementation-Version': project.version,
-                    'Build-Time': new Date().format('dd MMM yyyy, hh:mm:ss zzz'))
-        }
-    } catch (Exception ignored) {
+    Map<String, ?> manifestAttributesMap = new HashMap<>()
+    if (project.hasProperty('mainClass')) {
+        manifestAttributesMap.put('Main-Class', mainClass)
+    }
+    manifestAttributesMap.put('Implementation-Title', project.name)
+    manifestAttributesMap.put('Implementation-Version', project.version)
+    manifestAttributesMap.put('Build-Time', new Date().format('dd MMM yyyy, hh:mm:ss zzz'))
+    manifest {
+        attributes (manifestAttributesMap)
     }
 
     archiveClassifier.set('sources')
@@ -335,8 +339,6 @@ def subProjectRunConfigurationsRec(
 apply plugin: 'idea'
 idea {
     module {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
         downloadJavadoc = true
         downloadSources = true
     }
@@ -344,8 +346,6 @@ idea {
 
 apply plugin: 'eclipse'
 eclipse {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
     classpath {
         downloadJavadoc = true
         downloadSources = true

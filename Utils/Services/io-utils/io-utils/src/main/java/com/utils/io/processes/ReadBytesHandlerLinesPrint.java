@@ -7,6 +7,7 @@ public class ReadBytesHandlerLinesPrint extends AbstractReadBytesHandlerLines {
 	@Override
 	protected void handleLine(
 			final String line) {
+
 		Logger.printLine(line);
 	}
 }

@@ -28,44 +28,50 @@ public final class EnvUtils {
 	public static String replaceEnvironmentVariables(
 			final String strParam) {
 
-		final StringBuilder stringBuilder = new StringBuilder();
+		String resultStr = null;
+		if (strParam != null) {
+			final StringBuilder stringBuilder = new StringBuilder();
 
-		String str = strParam;
-		final int length = str.length();
-		char lastCh = 0;
-		for (int i = 0; i < length; i++) {
+			String str = strParam;
+			final int length = str.length();
+			char lastCh = 0;
+			for (int i = 0; i < length; i++) {
 
-			final char ch = str.charAt(i);
-			if (lastCh == '%' && ch == '%') {
-				lastCh = 0;
-				continue;
+				final char ch = str.charAt(i);
+				if (lastCh == '%' && ch == '%') {
+					lastCh = 0;
+					continue;
+				}
+
+				stringBuilder.append(ch);
+				lastCh = ch;
 			}
+			str = stringBuilder.toString();
 
-			stringBuilder.append(ch);
-			lastCh = ch;
-		}
-		str = stringBuilder.toString();
+			stringBuilder.setLength(0);
+			int remainingStart = 0;
+			final Matcher matcher = ENVIRONMENT_VALUE_PATTERN.matcher(str);
+			while (matcher.find()) {
 
-		stringBuilder.setLength(0);
-		int remainingStart = 0;
-		final Matcher matcher = ENVIRONMENT_VALUE_PATTERN.matcher(str);
-		while (matcher.find()) {
+				final int start = matcher.start();
+				final int end = matcher.end();
+				final String environmentVariable = str.substring(start + 1, end - 1);
+				final String environmentVariableValue = getEnv(environmentVariable);
+				if (environmentVariableValue != null) {
 
-			final int start = matcher.start();
-			final int end = matcher.end();
-			final String environmentVariable = str.substring(start + 1, end - 1);
-			final String environmentVariableValue = getEnv(environmentVariable);
-			if (environmentVariableValue != null) {
-				stringBuilder.append(str, remainingStart, start).append(environmentVariableValue);
-				remainingStart = end;
+					stringBuilder.append(str, remainingStart, start).append(environmentVariableValue);
+					remainingStart = end;
+				}
 			}
+			stringBuilder.append(str.substring(remainingStart));
+			resultStr = stringBuilder.toString();
 		}
-		stringBuilder.append(str.substring(remainingStart));
-		return stringBuilder.toString();
+		return resultStr;
 	}
 
 	public static String getEnv(
 			final String name) {
+
 		return ENV_PROVIDER.getEnv(name);
 	}
 }

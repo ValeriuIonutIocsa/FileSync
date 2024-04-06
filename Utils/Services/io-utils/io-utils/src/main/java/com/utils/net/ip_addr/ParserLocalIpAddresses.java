@@ -37,7 +37,7 @@ public class ParserLocalIpAddresses {
 						if (!loopBackAddress) {
 
 							String ipAddress = inetAddress.toString();
-							if (ipAddress.length() > 0 && ipAddress.charAt(0) == '/') {
+							if (!ipAddress.isEmpty() && ipAddress.charAt(0) == '/') {
 								ipAddress = ipAddress.substring(1);
 							}
 							final String displayName = networkInterface.getDisplayName();

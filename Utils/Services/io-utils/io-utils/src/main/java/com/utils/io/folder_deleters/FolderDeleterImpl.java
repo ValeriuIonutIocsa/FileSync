@@ -28,7 +28,7 @@ class FolderDeleterImpl implements FolderDeleter {
 
 		final boolean success;
 		if (IoUtils.directoryExists(folderPathString)) {
-			success = deleteFolderNoChecks(folderPathString, false, verboseError);
+			success = deleteFolderNoChecks(folderPathString, verboseProgress, verboseError);
 		} else {
 			success = true;
 		}
@@ -44,6 +44,12 @@ class FolderDeleterImpl implements FolderDeleter {
 
 		boolean success = false;
 		try {
+			if (verboseProgress) {
+
+				Logger.printProgress("deleting folder:");
+				Logger.printLine(folderPathString);
+			}
+
 			final Path folderPath = Paths.get(folderPathString);
 			Files.walkFileTree(folderPath, new SimpleFileVisitor<>() {
 

@@ -19,6 +19,7 @@ public class DocumentOpenerFile extends AbstractDocumentOpener {
 	@Override
 	Document parse(
 			final DocumentBuilder documentBuilder) throws Exception {
+
 		return documentBuilder.parse(file);
 	}
 }

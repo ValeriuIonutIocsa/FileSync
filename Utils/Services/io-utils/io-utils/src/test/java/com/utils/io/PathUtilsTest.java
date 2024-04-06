@@ -60,7 +60,7 @@ class PathUtilsTest {
 	List<DynamicTest> testComputeFileName() {
 
 		final List<DynamicTest> dynamicTestList = new ArrayList<>();
-		final List<Integer> testCaseList = Arrays.asList(0, 1, 2, 3, 4, 5);
+		final List<Integer> testCaseList = Arrays.asList(0, 1, 2, 3, 4, 5, 6);
 		if (testCaseList.contains(1)) {
 			dynamicTestList.add(DynamicTest.dynamicTest("1 (regular file path)",
 					() -> testComputeFileNameCommon(
@@ -86,7 +86,13 @@ class PathUtilsTest {
 							"..")));
 		}
 		if (testCaseList.contains(5)) {
-			dynamicTestList.add(DynamicTest.dynamicTest("5 (null file path)",
+			dynamicTestList.add(DynamicTest.dynamicTest("5 (path ending with backslash)",
+					() -> testComputeFileNameCommon(
+							"C:\\IVI\\Prog\\JavaGradle\\WeatherAnalyzer\\",
+							"WeatherAnalyzer")));
+		}
+		if (testCaseList.contains(6)) {
+			dynamicTestList.add(DynamicTest.dynamicTest("6 (null file path)",
 					() -> testComputeFileNameCommon(
 							null,
 							null)));

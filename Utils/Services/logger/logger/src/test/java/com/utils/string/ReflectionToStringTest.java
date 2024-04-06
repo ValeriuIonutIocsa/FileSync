@@ -34,7 +34,7 @@ class ReflectionToStringTest {
 		field4.put("k5", "v5");
 
 		final Object obj;
-		final int input = Integer.parseInt("3");
+		final int input = StrUtils.tryParsePositiveInt("3");
 		if (input == 1) {
 
 			obj = new TestClass1(12, field2, field3, field4);

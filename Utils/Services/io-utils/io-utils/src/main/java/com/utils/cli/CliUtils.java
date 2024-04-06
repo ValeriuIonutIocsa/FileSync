@@ -14,6 +14,7 @@ public final class CliUtils {
 		for (final String arg : args) {
 
 			if (arg.startsWith("--")) {
+
 				final int indexOf = arg.indexOf('=');
 				if (indexOf >= 3) {
 

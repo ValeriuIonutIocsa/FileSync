@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-    <configuration default="false" factoryName="JUnit" folderName="logger" name="ConverterDateTest.testDateToString" nameIsGenerated="true" type="JUnit">
+    <configuration default="false" factoryName="JUnit" folderName="logger" name="ConverterDateTest.testStringToDate" nameIsGenerated="true" type="JUnit">
         <module name="FileSyncAllModules.logger.test"/>
         <extension name="coverage">
             <pattern>
@@ -9,7 +9,7 @@
         </extension>
         <option name="PACKAGE_NAME" value="com.utils.string.converters"/>
         <option name="MAIN_CLASS_NAME" value="com.utils.string.converters.ConverterDateTest"/>
-        <option name="METHOD_NAME" value="testDateToString"/>
+        <option name="METHOD_NAME" value="testStringToDate"/>
         <option name="TEST_OBJECT" value="method"/>
         <method v="2">
             <option enabled="true" name="Make"/>

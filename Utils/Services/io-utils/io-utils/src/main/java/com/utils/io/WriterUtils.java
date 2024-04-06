@@ -56,7 +56,7 @@ public final class WriterUtils {
 			final String filePathString) {
 
 		try {
-			tryStringToFile(string, charset, filePathString);
+			stringToFile(string, charset, filePathString);
 
 		} catch (final Exception exc) {
 			Logger.printError("failed to write string to file:" +
@@ -72,6 +72,7 @@ public final class WriterUtils {
 
 		FactoryFolderCreator.getInstance().createParentDirectories(filePathString, false, true);
 		FactoryReadOnlyFlagClearer.getInstance().clearReadOnlyFlagFile(filePathString, false, true);
+
 		try (PrintStream printStream = StreamUtils.openPrintStream(filePathString, false, charset)) {
 			printStream.print(string);
 		}

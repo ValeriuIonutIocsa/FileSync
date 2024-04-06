@@ -2,9 +2,13 @@ package com.utils.log.progress;
 
 public interface ProgressIndicator {
 
-	void update(
-			int count,
-			int total);
+	default void update(
+			final int count,
+			final int total) {
+
+		final double value = (double) count / total;
+		update(value);
+	}
 
 	void update(
 			double value);

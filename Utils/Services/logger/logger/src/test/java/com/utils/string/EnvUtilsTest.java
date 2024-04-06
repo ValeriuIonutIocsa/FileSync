@@ -17,7 +17,7 @@ class EnvUtilsTest {
 
 		final String str;
 		final String expectedOutStr;
-		final int input = Integer.parseInt("1");
+		final int input = StrUtils.tryParsePositiveInt("1");
 		if (input == 1) {
 			str = "abcd%ENV1%xyz";
 			expectedOutStr = "abcd1111xyz";

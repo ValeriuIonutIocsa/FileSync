@@ -10,6 +10,7 @@ public interface ReadOnlyFlagClearer {
 	 * @param filePathString
 	 *            The path to the file.
 	 * @param verboseProgress
+	 *            Enables verbose progress logging.
 	 * @param verboseError
 	 *            If true, messages will be logged.
 	 */
@@ -25,6 +26,7 @@ public interface ReadOnlyFlagClearer {
 	 * @param filePathString
 	 *            The path to the file.
 	 * @param verboseProgress
+	 *            Enables verbose progress logging.
 	 * @param verboseError
 	 *            If true, messages will be logged.
 	 */
@@ -40,6 +42,7 @@ public interface ReadOnlyFlagClearer {
 	 * @param folderPathString
 	 *            The path to the folder.
 	 * @param verboseProgress
+	 *            Enables verbose progress logging.
 	 * @param verboseError
 	 *            If true, messages will be logged.
 	 */
@@ -51,10 +54,11 @@ public interface ReadOnlyFlagClearer {
 
 	/**
 	 * Clears the readonly flags of all files inside a folder.
-	 *
+	 * 
 	 * @param folderPathString
 	 *            The path to the folder.
 	 * @param verboseProgress
+	 *            Enables verbose progress logging.
 	 * @param verboseError
 	 *            If true, messages will be logged.
 	 */

@@ -8,16 +8,25 @@ import com.utils.string.StrUtils;
 
 public class PatternWithCase {
 
-	private final Pattern pattern;
+	private final String patternString;
+	private final boolean caseSensitive;
+
+	private transient final Pattern pattern;
 
 	PatternWithCase(
+			final String patternString,
+			final boolean caseSensitive,
 			final Pattern pattern) {
+
+		this.patternString = patternString;
+		this.caseSensitive = caseSensitive;
 
 		this.pattern = pattern;
 	}
 
 	public boolean checkMatches(
 			final String string) {
+
 		return string != null && pattern.matcher(string).matches();
 	}
 
@@ -25,10 +34,8 @@ public class PatternWithCase {
 			final Element element,
 			final String attributeName) {
 
-		final String patternString = pattern.toString();
 		element.setAttribute(attributeName, patternString);
-		final boolean exclusionPatternCaseSensitive = isCaseSensitive();
-		element.setAttribute(attributeName + "CaseSensitive", String.valueOf(exclusionPatternCaseSensitive));
+		element.setAttribute(attributeName + "CaseSensitive", String.valueOf(caseSensitive));
 	}
 
 	@Override
@@ -36,15 +43,15 @@ public class PatternWithCase {
 		return StrUtils.reflectionToString(this);
 	}
 
-	public Pattern getPattern() {
-		return pattern;
-	}
-
 	public String getPatternString() {
-		return pattern.toString();
+		return patternString;
 	}
 
 	public boolean isCaseSensitive() {
-		return RegexUtils.checkCaseSensitive(pattern);
+		return caseSensitive;
+	}
+
+	public Pattern getPattern() {
+		return pattern;
 	}
 }

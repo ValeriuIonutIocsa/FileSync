@@ -22,7 +22,7 @@ final class AppStartFileSync {
 
 		Logger.setDebugMode(true);
 
-		System.out.println("--> starting FileSync");
+		Logger.printProgress("starting FileSync");
 
 		if (args.length >= 1 && "-help".equals(args[0])) {
 
@@ -85,6 +85,7 @@ final class AppStartFileSync {
 
 	private static String createHelpMessage() {
 
-		return "usage: file_sync <settings_file_path>";
+		return "usage: file_sync <settings_file_path>" + System.lineSeparator() +
+				"file_sync CLI <src_folder_path> <dst_folder_path>";
 	}
 }

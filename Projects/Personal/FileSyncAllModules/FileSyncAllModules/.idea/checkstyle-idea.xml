@@ -2,12 +2,17 @@
 <project version="4">
   <component name="CheckStyle-IDEA" serialisationVersion="2">
     <checkstyleVersion>10.5.0</checkstyleVersion>
-    <scanScope>JavaOnly</scanScope>
+    <scanScope>JavaOnlyWithTests</scanScope>
     <copyLibs>true</copyLibs>
+    <option name="thirdPartyClasspath" />
+    <option name="activeLocationIds">
+      <option value="83919f98-d453-4802-b21e-bafce4a6ebfb" />
+    </option>
     <option name="locations">
       <list>
         <ConfigurationLocation id="bundled-sun-checks" type="BUNDLED" scope="All" description="Sun Checks">(bundled)</ConfigurationLocation>
         <ConfigurationLocation id="bundled-google-checks" type="BUNDLED" scope="All" description="Google Checks">(bundled)</ConfigurationLocation>
+        <ConfigurationLocation id="83919f98-d453-4802-b21e-bafce4a6ebfb" type="LOCAL_FILE" scope="All" description="ETS checkstyle config">C:/IVI/Apps/Eclipse/settings/ets-checkstyle-config.xml</ConfigurationLocation>
       </list>
     </option>
   </component>

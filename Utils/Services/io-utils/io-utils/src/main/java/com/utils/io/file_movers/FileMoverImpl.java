@@ -47,7 +47,7 @@ class FileMoverImpl implements FileMover {
 
 				final List<CopyOption> copyOptionList = new ArrayList<>();
 				copyOptionList.add(StandardCopyOption.REPLACE_EXISTING);
-				final CopyOption[] copyOptionArray = copyOptionList.toArray(new CopyOption[] {});
+				final CopyOption[] copyOptionArray = copyOptionList.toArray(new CopyOption[0]);
 
 				final Path srcFilePath = Paths.get(srcFilePathString);
 				final Path dstFilePath = Paths.get(dstFilePathString);

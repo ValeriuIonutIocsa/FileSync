@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import com.utils.log.Logger;
+import com.utils.string.StrUtils;
 
 class HashUtilsTest {
 
@@ -27,7 +28,7 @@ class HashUtilsTest {
 		final String filePathString;
 		final String algorithm;
 		final String expectedHash;
-		final int input = Integer.parseInt("2");
+		final int input = StrUtils.tryParsePositiveInt("2");
 		if (input == 1) {
 
 			filePathString = "D:\\p\\0g\\0a3\\911\\0g0a3_0u0_911\\work\\3R\\t1\\lib\\libt1base.a";
@@ -35,10 +36,10 @@ class HashUtilsTest {
 			expectedHash = "239BA426BC125B8E28C12AA4CB9E09DBAB33F3E7E760C2103DD9CC4119F0CB3E";
 
 		} else if (input == 2) {
-			filePathString = "C:\\Users\\uid39522\\OneDrive - Vitesco Technologies\\" +
-					"_VALERIU_\\ProjectAnalyzer\\3_Executable\\5.0.39\\ProjectAnalyzer.jar";
+			filePathString = "D:\\casdev\\td5\\bm\\g12\\lb4\\BMG12_0U0_LB4_022\\" +
+					"_FS_BMG12_0U0_NORMAL\\out\\code\\FS_BMG12_0U0_LB4_022.elf";
 			algorithm = "SHA-256";
-			expectedHash = "49732733b7208191f1de3b1be1f1588e1da44dd09ff24d279d082e782a773065";
+			expectedHash = "f133a932295037dd7fe2cd5d35bb1ca7de95324eba24104628f396430be894a1";
 
 		} else {
 			throw new RuntimeException();

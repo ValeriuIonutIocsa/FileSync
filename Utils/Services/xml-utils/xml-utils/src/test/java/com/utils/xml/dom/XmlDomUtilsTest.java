@@ -1,13 +1,35 @@
 package com.utils.xml.dom;
 
+import java.io.InputStream;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.utils.io.PathUtils;
+import com.utils.io.ResourceFileUtils;
 import com.utils.log.Logger;
+import com.utils.xml.dom.documents.ValidatedDocument;
 
 class XmlDomUtilsTest {
+
+	@Test
+	void testOpenAndValidateDocumentResourceSchema() throws Exception {
+
+		final String testXmlResourceFilePath = "com/utils/xml/dom/compress/test_validate.xml";
+		final String testXsdResourceFilePath = "com/utils/xml/dom/compress/test_validate.xsd";
+
+		final ValidatedDocument validatedDocument;
+		try (InputStream inputStream =
+				ResourceFileUtils.resourceFileToInputStream(testXmlResourceFilePath)) {
+
+			validatedDocument = XmlDomUtils.openAndValidateDocumentResourceSchema(
+					inputStream, testXsdResourceFilePath);
+		}
+		final boolean validationSuccessful = validatedDocument.isValidationSuccessful();
+		Assertions.assertTrue(validationSuccessful);
+	}
 
 	@Test
 	void testRemoveElementsByTagName() throws Exception {

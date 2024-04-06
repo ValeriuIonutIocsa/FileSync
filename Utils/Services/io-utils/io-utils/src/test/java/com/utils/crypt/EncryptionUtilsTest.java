@@ -9,6 +9,7 @@ import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -18,6 +19,40 @@ import com.utils.io.StreamUtils;
 import com.utils.log.Logger;
 
 class EncryptionUtilsTest {
+
+	@Test
+	void testEncryptFile() throws Exception {
+
+		final String inputFilePathString =
+				"\\\\vt1.vitesco.com\\SMT\\did01438\\Common\\uid39522\\T1LibValSettings.xml";
+		final String outputFilePathString =
+				"\\\\vt1.vitesco.com\\SMT\\did01438\\Common\\uid39522\\T1LibValSettings.encrypted2";
+
+		final Cipher encryptCipher = EncryptionUtils.createEncryptCipher();
+		try (InputStream inputStream = StreamUtils.openBufferedInputStream(inputFilePathString);
+				OutputStream outputStream = new CipherOutputStream(
+						StreamUtils.openBufferedOutputStream(outputFilePathString), encryptCipher)) {
+
+			IOUtils.copy(inputStream, outputStream);
+		}
+	}
+
+	@Test
+	void testDecryptFile() throws Exception {
+
+		final String inputFilePathString =
+				"\\\\vt1.vitesco.com\\SMT\\did01438\\Common\\uid39522\\T1LibValSettings.encrypted";
+		final String outputFilePathString =
+				"\\\\vt1.vitesco.com\\SMT\\did01438\\Common\\uid39522\\T1LibValSettings.xml";
+
+		final Cipher decryptCipher = EncryptionUtils.createDecryptCipher();
+		try (InputStream inputStream = new CipherInputStream(
+				StreamUtils.openBufferedInputStream(inputFilePathString), decryptCipher);
+				OutputStream outputStream = StreamUtils.openBufferedOutputStream(outputFilePathString)) {
+
+			IOUtils.copy(inputStream, outputStream);
+		}
+	}
 
 	@Test
 	void testEncryptAndDecrypt() throws Exception {

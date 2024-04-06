@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestFactory;
-import org.junit.platform.commons.util.StringUtils;
 
 import com.utils.log.Logger;
 import com.utils.string.characters.SpecialCharacterUtils;
@@ -182,6 +182,72 @@ class StrUtilsTest {
 
 		final String nanoTimeString = StrUtils.nanoTimeToString(nanoTime);
 		Assertions.assertEquals(expectedString, nanoTimeString);
+	}
+
+	@TestFactory
+	List<DynamicTest> testRemovePrefix() {
+
+		final List<DynamicTest> dynamicTestList = new ArrayList<>();
+		final List<Integer> testCaseList = Arrays.asList(0, 1, 2, 3, 4);
+		if (testCaseList.contains(1)) {
+			dynamicTestList.add(DynamicTest.dynamicTest("1 (regular)",
+					() -> testRemovePrefixCommon("abc_RCSVMP", "abc_", "RCSVMP")));
+		}
+		if (testCaseList.contains(2)) {
+			dynamicTestList.add(DynamicTest.dynamicTest("2 (not starting with)",
+					() -> testRemovePrefixCommon("abc_RCSVMP", "bcd", "abc_RCSVMP")));
+		}
+		if (testCaseList.contains(3)) {
+			dynamicTestList.add(DynamicTest.dynamicTest("3 (empty string)",
+					() -> testRemovePrefixCommon("", "abc", "")));
+		}
+		if (testCaseList.contains(4)) {
+			dynamicTestList.add(DynamicTest.dynamicTest("4 (all null)",
+					() -> testRemovePrefixCommon(null, null, null)));
+		}
+		return dynamicTestList;
+	}
+
+	private static void testRemovePrefixCommon(
+			final String str,
+			final String prefix,
+			final String expectedResultStr) {
+
+		final String resultStr = StrUtils.removePrefix(str, prefix);
+		Assertions.assertEquals(expectedResultStr, resultStr);
+	}
+
+	@TestFactory
+	List<DynamicTest> testRemoveSuffix() {
+
+		final List<DynamicTest> dynamicTestList = new ArrayList<>();
+		final List<Integer> testCaseList = Arrays.asList(0, 1, 2, 3, 4);
+		if (testCaseList.contains(1)) {
+			dynamicTestList.add(DynamicTest.dynamicTest("1 (regular)",
+					() -> testRemoveSuffixCommon("RCSVMP_nvm", "_nvm", "RCSVMP")));
+		}
+		if (testCaseList.contains(2)) {
+			dynamicTestList.add(DynamicTest.dynamicTest("2 (not ending with)",
+					() -> testRemoveSuffixCommon("RCSVMP_nvm", "_abc", "RCSVMP_nvm")));
+		}
+		if (testCaseList.contains(3)) {
+			dynamicTestList.add(DynamicTest.dynamicTest("3 (empty string)",
+					() -> testRemoveSuffixCommon("", "abc", "")));
+		}
+		if (testCaseList.contains(4)) {
+			dynamicTestList.add(DynamicTest.dynamicTest("4 (all null)",
+					() -> testRemoveSuffixCommon(null, null, null)));
+		}
+		return dynamicTestList;
+	}
+
+	private static void testRemoveSuffixCommon(
+			final String str,
+			final String suffix,
+			final String expectedResultStr) {
+
+		final String resultStr = StrUtils.removeSuffix(str, suffix);
+		Assertions.assertEquals(expectedResultStr, resultStr);
 	}
 
 	@Test

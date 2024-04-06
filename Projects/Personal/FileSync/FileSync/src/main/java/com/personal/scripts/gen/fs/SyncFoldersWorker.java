@@ -1,5 +1,6 @@
 package com.personal.scripts.gen.fs;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -64,51 +65,89 @@ class SyncFoldersWorker {
 			final String srcFolderPathString,
 			final String dstFolderPathString) {
 
-		final List<String> srcFolderFilePathStringList =
-				ListFileUtils.listFiles(srcFolderPathString);
-		final List<String> dstFolderFilePathStringList =
-				ListFileUtils.listFiles(dstFolderPathString);
+		final List<String> srcFolderFolderPathStringList = new ArrayList<>();
+		final List<String> srcFolderFilePathStringList = new ArrayList<>();
+		ListFileUtils.visitFiles(srcFolderPathString,
+				dirPath -> {
+					final String folderPathString = dirPath.toString();
+					srcFolderFolderPathStringList.add(folderPathString);
+				},
+				filePath -> {
+					final String filePathString = filePath.toString();
+					srcFolderFilePathStringList.add(filePathString);
+				});
+
+		final List<String> dstFolderFolderPathStringList = new ArrayList<>();
+		final List<String> dstFolderFilePathStringList = new ArrayList<>();
+		ListFileUtils.visitFiles(dstFolderPathString,
+				dirPath -> {
+					final String folderPathString = dirPath.toString();
+					dstFolderFolderPathStringList.add(folderPathString);
+				},
+				filePath -> {
+					final String filePathString = filePath.toString();
+					dstFolderFilePathStringList.add(filePathString);
+				});
+
+		for (final String srcFolderFolderPathString : srcFolderFolderPathStringList) {
+
+			final String relativePathString =
+					PathUtils.computeRelativePath(srcFolderPathString, srcFolderFolderPathString);
+			final String dstFolderFolderPathString =
+					PathUtils.computePath(dstFolderPathString, relativePathString);
+
+			if (dstFolderFolderPathStringList.contains(dstFolderFolderPathString)) {
+
+				dstFolderFilePathStringList.remove(dstFolderFolderPathString);
+				addTask(() -> syncFolders(srcFolderFolderPathString, dstFolderFolderPathString));
+
+			} else if (dstFolderFilePathStringList.contains(dstFolderFolderPathString)) {
+
+				dstFolderFilePathStringList.remove(dstFolderFolderPathString);
+				addTask(() -> {
+					deleteFile(dstFolderFolderPathString);
+					createFolder(srcFolderFolderPathString, dstFolderFolderPathString);
+				});
+
+			} else {
+				addTask(() -> createFolder(srcFolderFolderPathString, dstFolderFolderPathString));
+			}
+		}
 
 		for (final String srcFolderFilePathString : srcFolderFilePathStringList) {
-
-			final boolean directory = IoUtils.directoryExists(srcFolderFilePathString);
 
 			final String relativePathString =
 					PathUtils.computeRelativePath(srcFolderPathString, srcFolderFilePathString);
 			final String dstFolderFilePathString =
 					PathUtils.computePath(dstFolderPathString, relativePathString);
 
-			final boolean dstFolderFileExists = IoUtils.fileExists(dstFolderFilePathString);
-			if (dstFolderFileExists) {
+			if (dstFolderFolderPathStringList.contains(dstFolderFilePathString)) {
 
 				dstFolderFilePathStringList.remove(dstFolderFilePathString);
-				if (directory) {
-					addTask(() -> syncFolders(srcFolderFilePathString, dstFolderFilePathString));
-				} else {
-					addTask(() -> syncFiles(srcFolderFilePathString, dstFolderFilePathString));
-				}
+				addTask(() -> {
+					deleteFolder(dstFolderFilePathString);
+					createFile(srcFolderFilePathString, dstFolderFilePathString);
+				});
+
+			} else if (dstFolderFilePathStringList.contains(dstFolderFilePathString)) {
+
+				dstFolderFilePathStringList.remove(dstFolderFilePathString);
+				addTask(() -> syncFiles(srcFolderFilePathString, dstFolderFilePathString));
 
 			} else {
-				if (directory) {
-					addTask(() -> createFolder(srcFolderFilePathString, dstFolderFilePathString));
-				} else {
-					addTask(() -> createFile(srcFolderFilePathString, dstFolderFilePathString));
-				}
+				addTask(() -> createFile(srcFolderFilePathString, dstFolderFilePathString));
 			}
 		}
 
+		for (final String dstFolderFolderPathString : dstFolderFolderPathStringList) {
+			addTask(() -> deleteFolder(dstFolderFolderPathString));
+		}
 		for (final String dstFolderFilePathString : dstFolderFilePathStringList) {
-
-			final boolean directory = IoUtils.directoryExists(dstFolderFilePathString);
-			if (directory) {
-				addTask(() -> deleteFolder(dstFolderFilePathString));
-			} else {
-				addTask(() -> deleteFile(dstFolderFilePathString));
-			}
+			addTask(() -> deleteFile(dstFolderFilePathString));
 		}
 	}
 
-	private void syncFiles(
+	private static void syncFiles(
 			final String srcFolderFilePathString,
 			final String dstFolderFilePathString) {
 
@@ -149,22 +188,33 @@ class SyncFoldersWorker {
 				.createDirectories(dstFolderPathString, true, true);
 		if (success) {
 
-			final List<String> srcFolderFilePathStringList =
-					ListFileUtils.listFiles(srcFolderPathString);
+			final List<String> srcFolderFolderPathStringList = new ArrayList<>();
+			final List<String> srcFolderFilePathStringList = new ArrayList<>();
+			ListFileUtils.visitFiles(srcFolderPathString,
+					dirPath -> {
+						final String folderPathString = dirPath.toString();
+						srcFolderFolderPathStringList.add(folderPathString);
+					},
+					filePath -> {
+						final String filePathString = filePath.toString();
+						srcFolderFilePathStringList.add(filePathString);
+					});
 
+			for (final String srcFolderFolderPathString : srcFolderFolderPathStringList) {
+
+				final String relativePathString =
+						PathUtils.computeRelativePath(srcFolderPathString, srcFolderFolderPathString);
+				final String dstFolderFolderPathString =
+						PathUtils.computePath(dstFolderPathString, relativePathString);
+				addTask(() -> createFolder(srcFolderFolderPathString, dstFolderFolderPathString));
+			}
 			for (final String srcFolderFilePathString : srcFolderFilePathStringList) {
 
 				final String relativePathString =
 						PathUtils.computeRelativePath(srcFolderPathString, srcFolderFilePathString);
 				final String dstFolderFilePathString =
 						PathUtils.computePath(dstFolderPathString, relativePathString);
-
-				final boolean directory = IoUtils.directoryExists(srcFolderFilePathString);
-				if (directory) {
-					addTask(() -> createFolder(srcFolderFilePathString, dstFolderFilePathString));
-				} else {
-					addTask(() -> createFile(srcFolderFilePathString, dstFolderFilePathString));
-				}
+				addTask(() -> createFile(srcFolderFilePathString, dstFolderFilePathString));
 			}
 		}
 	}

@@ -21,7 +21,7 @@ class ConcurrencyUtilsTest {
 	void testExecuteMultiThreadedTask() {
 
 		final ConcurrencyUtils concurrencyUtils;
-		final int input = Integer.parseInt("1");
+		final int input = StrUtils.tryParsePositiveInt("1");
 		if (input == 1) {
 			concurrencyUtils = new ConcurrencyUtilsSimpleRegular(16);
 		} else if (input == 2) {
@@ -39,6 +39,15 @@ class ConcurrencyUtilsTest {
 		}
 
 		final List<Runnable> runnableList = new ArrayList<>();
+		fillRunnableList(runnableList);
+
+		Logger.printProgress("running concurrency utils test");
+		concurrencyUtils.executeMultiThreadedTask(runnableList);
+	}
+
+	private static void fillRunnableList(
+			final List<Runnable> runnableList) {
+
 		final Random random = new Random();
 		for (int i = 0; i < 10; i++) {
 
@@ -61,8 +70,5 @@ class ConcurrencyUtilsTest {
 				}
 			});
 		}
-
-		Logger.printProgress("running concurrency utils test");
-		concurrencyUtils.executeMultiThreadedTask(runnableList);
 	}
 }

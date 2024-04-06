@@ -18,6 +18,7 @@ class FolderCopierImpl implements FolderCopier {
 	public boolean copyFolder(
 			final String srcFolderPathString,
 			final String dstFolderPathString,
+			final boolean deleteDirectoryBeforeCopying,
 			final boolean verboseProgress,
 			final boolean verboseError) {
 
@@ -31,9 +32,14 @@ class FolderCopierImpl implements FolderCopier {
 				Logger.printLine(dstFolderPathString);
 			}
 
-			final boolean deleteFolderSuccess = FactoryFolderDeleter.getInstance()
-					.deleteFolder(dstFolderPathString, false, verboseError);
-			if (deleteFolderSuccess) {
+			final boolean keepGoing;
+			if (deleteDirectoryBeforeCopying) {
+				keepGoing = FactoryFolderDeleter.getInstance()
+						.deleteFolder(dstFolderPathString, verboseProgress, verboseError);
+			} else {
+				keepGoing = true;
+			}
+			if (keepGoing) {
 
 				final File srcFolder = new File(srcFolderPathString);
 				final File dstFolder = new File(dstFolderPathString);

@@ -4,6 +4,7 @@ import java.io.InputStream;
 
 import javax.xml.parsers.DocumentBuilder;
 
+import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
@@ -27,14 +28,18 @@ public class DocumentOpenerInputStream extends AbstractDocumentOpener {
 	Document parse(
 			final DocumentBuilder documentBuilder) throws Exception {
 
-		documentBuilder.setEntityResolver((
-				publicId,
-				systemId) -> {
+		if (StringUtils.isNotBlank(schemaFolderPathString)) {
 
-			final String schemaFileName = PathUtils.computeFileName(systemId);
-			final String schemaFilePathString = PathUtils.computePath(schemaFolderPathString, schemaFileName);
-			return new InputSource(ReaderUtils.openBufferedReader(schemaFilePathString));
-		});
+			documentBuilder.setEntityResolver((
+					publicId,
+					systemId) -> {
+
+				final String schemaFileName = PathUtils.computeFileName(systemId);
+				final String schemaFilePathString =
+						PathUtils.computePath(schemaFolderPathString, schemaFileName);
+				return new InputSource(ReaderUtils.openBufferedReader(schemaFilePathString));
+			});
+		}
 
 		return documentBuilder.parse(inputStream);
 	}

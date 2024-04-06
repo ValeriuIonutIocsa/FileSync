@@ -1,7 +1,6 @@
 package com.utils.io;
 
 import java.io.File;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -26,13 +25,17 @@ public final class IoTestUtils {
 		Logger.printLine(folderPathString);
 		Logger.printLine(otherFolderPathString);
 
-		final List<String> filePathStringList;
+		final List<String> filePathStringList = new ArrayList<>();
 		final boolean folderExists = IoUtils.directoryExists(folderPathString);
 		if (folderExists) {
-			filePathStringList =
-					ListFileUtils.listFilesRecursively(folderPathString, Files::isRegularFile);
-		} else {
-			filePathStringList = new ArrayList<>();
+
+			ListFileUtils.visitFilesRecursively(folderPathString,
+					dirPath -> {
+					},
+					filePath -> {
+						final String filePathString = filePath.toString();
+						filePathStringList.add(filePathString);
+					});
 		}
 
 		final Set<String> matchedOtherFilePathStringSet = new HashSet<>();
@@ -57,13 +60,17 @@ public final class IoTestUtils {
 			fileCompareDataList.add(fileCompareData);
 		}
 
-		final List<String> otherFilePathStringList;
+		final List<String> otherFilePathStringList = new ArrayList<>();
 		final boolean otherFolderExists = IoUtils.directoryExists(otherFolderPathString);
 		if (otherFolderExists) {
-			otherFilePathStringList =
-					ListFileUtils.listFilesRecursively(otherFolderPathString, Files::isRegularFile);
-		} else {
-			otherFilePathStringList = new ArrayList<>();
+
+			ListFileUtils.visitFilesRecursively(otherFolderPathString,
+					dirPath -> {
+					},
+					filePath -> {
+						final String filePathString = filePath.toString();
+						otherFilePathStringList.add(filePathString);
+					});
 		}
 
 		for (final String otherFilePathString : otherFilePathStringList) {

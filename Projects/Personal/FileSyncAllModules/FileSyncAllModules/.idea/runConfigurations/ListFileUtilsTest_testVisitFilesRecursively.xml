@@ -1,0 +1,18 @@
+<component name="ProjectRunConfigurationManager">
+    <configuration default="false" factoryName="JUnit" folderName="io-utils" name="ListFileUtilsTest.testVisitFilesRecursively" nameIsGenerated="true" type="JUnit">
+        <module name="FileSyncAllModules.io-utils.test"/>
+        <extension name="coverage">
+            <pattern>
+                <option name="PATTERN" value="com.utils.io.*"/>
+                <option name="ENABLED" value="true"/>
+            </pattern>
+        </extension>
+        <option name="PACKAGE_NAME" value="com.utils.io"/>
+        <option name="MAIN_CLASS_NAME" value="com.utils.io.ListFileUtilsTest"/>
+        <option name="METHOD_NAME" value="testVisitFilesRecursively"/>
+        <option name="TEST_OBJECT" value="method"/>
+        <method v="2">
+            <option enabled="true" name="Make"/>
+        </method>
+    </configuration>
+</component>

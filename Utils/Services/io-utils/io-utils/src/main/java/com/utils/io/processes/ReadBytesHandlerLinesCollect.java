@@ -15,6 +15,7 @@ public class ReadBytesHandlerLinesCollect extends AbstractReadBytesHandlerLines 
 	@Override
 	protected void handleLine(
 			final String line) {
+
 		lineList.add(line);
 	}
 

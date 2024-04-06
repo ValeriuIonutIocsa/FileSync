@@ -3,8 +3,9 @@ ext {
             ':test-utils'
     ]
     compileClassPaths = [
-            'org.apache.commons:commons-lang3:3.12.0',
-            'org.jetbrains:annotations:24.0.1'
+            'org.apache.commons:commons-lang3:3.14.0',
+            'org.jetbrains:annotations:24.1.0',
+            'com.github.jbellis:jamm:0.4.0'
     ]
     compileJarFilePaths = []
     testCompileClassPaths = []

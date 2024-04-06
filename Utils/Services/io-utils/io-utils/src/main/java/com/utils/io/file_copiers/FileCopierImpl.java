@@ -69,7 +69,7 @@ class FileCopierImpl implements FileCopier {
 				if (copyAttributes) {
 					copyOptionList.add(StandardCopyOption.COPY_ATTRIBUTES);
 				}
-				final CopyOption[] copyOptionArray = copyOptionList.toArray(new CopyOption[] {});
+				final CopyOption[] copyOptionArray = copyOptionList.toArray(new CopyOption[0]);
 
 				final Path srcFilePath = Paths.get(srcFilePathString);
 				final Path dstFilePath = Paths.get(dstFilePathString);

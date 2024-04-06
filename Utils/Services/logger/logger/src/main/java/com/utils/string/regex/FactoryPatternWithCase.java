@@ -17,7 +17,10 @@ public final class FactoryPatternWithCase {
 
 		PatternWithCase patternWithCase = null;
 		if (pattern != null) {
-			patternWithCase = new PatternWithCase(pattern);
+
+			final String patternString = pattern.toString();
+			final boolean caseSensitive = RegexUtils.checkCaseSensitive(pattern);
+			patternWithCase = new PatternWithCase(patternString, caseSensitive, pattern);
 		}
 		return patternWithCase;
 	}
@@ -30,8 +33,7 @@ public final class FactoryPatternWithCase {
 		PatternWithCase patternWithCase = null;
 		final Pattern pattern = RegexUtils.tryCompile(patternString, caseSensitive);
 		if (pattern != null) {
-
-			patternWithCase = new PatternWithCase(pattern);
+			patternWithCase = new PatternWithCase(patternString, caseSensitive, pattern);
 		}
 		return patternWithCase;
 	}
@@ -45,12 +47,12 @@ public final class FactoryPatternWithCase {
 
 		final String patternCaseSensitiveString =
 				element.getAttribute(attributeName + "CaseSensitive");
-		final boolean patternCaseSensitive = Boolean.parseBoolean(patternCaseSensitiveString);
+		final boolean caseSensitive = Boolean.parseBoolean(patternCaseSensitiveString);
 
 		final String patternString = element.getAttribute(attributeName);
-		final Pattern pattern = RegexUtils.tryCompile(patternString, patternCaseSensitive);
+		final Pattern pattern = RegexUtils.tryCompile(patternString, caseSensitive);
 		if (pattern != null) {
-			patternWithCase = new PatternWithCase(pattern);
+			patternWithCase = new PatternWithCase(patternString, caseSensitive, pattern);
 		}
 
 		return patternWithCase;
@@ -59,7 +61,9 @@ public final class FactoryPatternWithCase {
 	@ApiMethod
 	public static PatternWithCase newInstanceBlank() {
 
-		final Pattern pattern = Pattern.compile("");
-		return new PatternWithCase(pattern);
+		final String patternString = "";
+		final boolean caseSensitive = true;
+		final Pattern pattern = Pattern.compile(patternString);
+		return new PatternWithCase(patternString, caseSensitive, pattern);
 	}
 }

@@ -1,6 +1,7 @@
 package com.utils.io.zip;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,10 +11,13 @@ import com.utils.io.IoUtils;
 import com.utils.io.PathUtils;
 import com.utils.io.file_deleters.FactoryFileDeleter;
 import com.utils.io.folder_deleters.FactoryFolderDeleter;
+import com.utils.io.processes.InputStreamReaderThread;
+import com.utils.io.processes.ReadBytesHandlerLinesPrint;
 import com.utils.log.Logger;
 
 public class ZipFileExtractor7z {
 
+	private final String sevenZipExecutablePathString;
 	private final String zipArchiveFilePathString;
 	private final String dstFolderPathString;
 	private final boolean deleteExisting;
@@ -21,10 +25,12 @@ public class ZipFileExtractor7z {
 	private boolean success;
 
 	public ZipFileExtractor7z(
+			final String sevenZipExecutablePathString,
 			final String zipArchiveFilePathString,
 			final String dstFolderPathString,
 			final boolean deleteExisting) {
 
+		this.sevenZipExecutablePathString = sevenZipExecutablePathString;
 		this.zipArchiveFilePathString = zipArchiveFilePathString;
 		this.dstFolderPathString = dstFolderPathString;
 		this.deleteExisting = deleteExisting;
@@ -75,7 +81,7 @@ public class ZipFileExtractor7z {
 				if (keepGoing) {
 
 					final List<String> commandPartList = new ArrayList<>();
-					commandPartList.add("7z");
+					commandPartList.add(sevenZipExecutablePathString);
 					commandPartList.add("x");
 					commandPartList.add(zipArchiveFilePathString);
 					commandPartList.add("-o" + dstFolderPathString);
@@ -92,10 +98,17 @@ public class ZipFileExtractor7z {
 					final Process process = new ProcessBuilder()
 							.directory(zipArchiveFolder)
 							.command(commandPartList)
-							.inheritIO()
+							.redirectErrorStream(true)
 							.start();
 
+					final InputStreamReaderThread inputStreamReaderThread = new InputStreamReaderThread(
+							"extract zip archive input stream reader", process.getInputStream(),
+							StandardCharsets.UTF_8, new ReadBytesHandlerLinesPrint());
+					inputStreamReaderThread.start();
+
 					final int exitCode = process.waitFor();
+					inputStreamReaderThread.join();
+
 					success = exitCode == 0;
 				}
 			}

@@ -2,7 +2,7 @@
     <configuration default="false" factoryName="Gradle" folderName="FileSyncAllModules" name="FileSyncAllModules [clean]" type="GradleRunConfiguration">
         <ExternalSystemSettings>
             <option name="executionName"/>
-            <option name="externalProjectPath" value="$PROJECT_DIR$/../../FileSyncAllModules/FileSyncAllModules"/>
+            <option name="externalProjectPath" value="$PROJECT_DIR$/../../../../Projects/Personal/FileSyncAllModules/FileSyncAllModules"/>
             <option name="externalSystemIdString" value="GRADLE"/>
             <option name="scriptParameters" value=""/>
             <option name="taskDescriptions">
