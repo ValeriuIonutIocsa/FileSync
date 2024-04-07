@@ -12,8 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.personal.scripts.gen.fs.settings.FolderPair;
 import com.utils.concurrency.ThreadUtils;
-import com.utils.io.FileSizeUtils;
-import com.utils.io.IoUtils;
+import com.utils.hash.HashUtils;
 import com.utils.io.ListFileUtils;
 import com.utils.io.PathUtils;
 import com.utils.io.file_copiers.FactoryFileCopier;
@@ -159,25 +158,14 @@ class SyncFoldersWorker {
 			final String dstFolderFilePathString) {
 
 		boolean sameFile = false;
-		final long srcFolderFileLastModifiedTime =
-				IoUtils.computeFileLastModifiedTime(srcFolderFilePathString);
-		if (srcFolderFileLastModifiedTime >= 0) {
+		final String hashAlgorithm = "SHA-256";
+		final String srcSha256 = HashUtils.computeFileHash(srcFolderFilePathString, hashAlgorithm);
+		if (srcSha256 != null) {
 
-			final long dstFolderFileLastModifiedTime =
-					IoUtils.computeFileLastModifiedTime(dstFolderFilePathString);
-			if (srcFolderFileLastModifiedTime == dstFolderFileLastModifiedTime) {
+			final String dstSha256 = HashUtils.computeFileHash(dstFolderFilePathString, hashAlgorithm);
+			if (srcSha256.equals(dstSha256)) {
 
-				final long srcFolderFileSize =
-						FileSizeUtils.fileSize(srcFolderFilePathString);
-				if (srcFolderFileSize >= 0) {
-
-					final long dstFolderFileSize =
-							FileSizeUtils.fileSize(dstFolderFilePathString);
-					if (srcFolderFileSize == dstFolderFileSize) {
-
-						sameFile = true;
-					}
-				}
+				sameFile = true;
 			}
 		}
 		if (!sameFile) {
